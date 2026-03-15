@@ -1,0 +1,70 @@
+---
+// src/components/Header.astro
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+
+    <a href="/" class="logo" aria-label="Solya Validator — home">
+      <img src="/logo.jpg" alt="Solya" class="logo-img" />
+      <span class="logo-text">Solya</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="/#why-solya" class="nav-link">Why Solya</a>
+      <a href="/#sonda" class="nav-link">SONDA</a>
+      <a href="/#stake" class="nav-link">Stake</a>
+      <a href="/security" class="nav-link">Security</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        🌙
+      </button>
+      <a href="/#stake" class="btn-primary btn-sm">Stake SOL</a>
+    </div>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="/#why-solya" class="mobile-nav-link">Why Solya</a>
+    <a href="/#sonda" class="mobile-nav-link">SONDA</a>
+    <a href="/#stake" class="mobile-nav-link">Stake</a>
+    <a href="/security" class="mobile-nav-link">Security</a>
+    <a href="/#stake" class="btn-primary" style="margin-top:0.5rem">Stake SOL</a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const header = document.getElementById('site-header');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  function updateIcon() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (toggle) toggle.textContent = isDark ? '🌙' : '☀️';
+  }
+
+  updateIcon();
+
+  toggle?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateIcon();
+  });
+
+  menuBtn?.addEventListener('click', () => mobileNav?.classList.toggle('open'));
+
+  document.querySelectorAll('.mobile-nav-link').forEach(l =>
+    l.addEventListener('click', () => mobileNav?.classList.remove('open'))
+  );
+
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>
