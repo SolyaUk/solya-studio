@@ -414,3 +414,322 @@ code, .mono {
   background: rgba(0, 229, 200, 0.2);
   color: var(--text-primary);
 }
+
+
+
+
+
+
+
+
+/* ============================================================
+   HERO SECTION
+   Додати в кінець global.css (замінити попередній блок HERO якщо є)
+   ============================================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.75); }
+}
+
+@keyframes scroll-hint {
+  0%   { opacity: 0; transform: translateY(-4px); }
+  50%  { opacity: 1; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+
+/* ---- Hero layout ---- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(4rem, 8vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---- Background — dark theme ---- */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.hero-bg-glow--crimson {
+  width: 600px;
+  height: 400px;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(150, 30, 20, 0.38) 0%, transparent 70%);
+  animation: fadeIn 2s ease forwards;
+}
+
+.hero-bg-glow--cyan {
+  width: 500px;
+  height: 300px;
+  top: 80px;
+  right: -100px;
+  background: radial-gradient(ellipse, rgba(0, 229, 200, 0.12) 0%, transparent 70%);
+  animation: fadeIn 2.5s ease forwards;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ---- Background — light theme ---- */
+/* Натхнення: денне небо з новим лого — теплий ранок */
+[data-theme="light"] .hero-bg-glow--crimson {
+  background: radial-gradient(ellipse, rgba(255, 180, 80, 0.22) 0%, transparent 70%);
+  bottom: -60px;
+}
+
+[data-theme="light"] .hero-bg-glow--cyan {
+  width: 700px;
+  height: 500px;
+  top: -100px;
+  right: -200px;
+  background: radial-gradient(ellipse, rgba(120, 180, 255, 0.2) 0%, transparent 65%);
+}
+
+/* Хмарний патерн для світлої теми */
+[data-theme="light"] .hero-bg-grid {
+  background-image:
+    radial-gradient(ellipse 120px 60px at 15% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(ellipse 200px 80px at 70% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(ellipse 100px 50px at 45% 35%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(ellipse 160px 70px at 85% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(ellipse 80px 40px at 30% 50%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  background-size: auto;
+  mask-image: none;
+}
+
+/* Теплий небесний градієнт основного фону в світлій темі */
+[data-theme="light"] .hero {
+  background: linear-gradient(
+    180deg,
+    #ddeeff 0%,
+    #eef4ff 30%,
+    #f4f3ef 70%,
+    #f4f3ef 100%
+  );
+}
+
+/* ---- Badges ---- */
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.badge-muted {
+  color: var(--text-muted);
+  border-color: var(--border);
+  background: transparent;
+}
+
+.badge-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.badge-dot--live {
+  background: var(--accent-cyan);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ---- Title ---- */
+.hero-title {
+  font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+/* ---- Subheadline ---- */
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  animation: fadeUp 0.6s ease 0.3s both;
+}
+
+/* ---- Stats ---- */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  animation: fadeUp 0.6s ease 0.4s both;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.hero-stat:first-child { padding-left: 0; }
+
+.hero-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ---- CTAs ---- */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.hero-cta-primary {
+  font-size: 1rem;
+  padding: 0.875rem 2rem;
+}
+
+/* ---- Vote account ---- */
+.hero-vote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  animation: fadeUp 0.6s ease 0.6s both;
+}
+
+.hero-vote-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-vote-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-vote-address {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+  word-break: break-all;
+}
+
+.hero-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.hero-copy-btn:hover {
+  color: var(--accent-cyan);
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.hero-copy-btn.copied {
+  color: var(--accent-cyan);
+  border-color: var(--border-accent);
+}
+
+/* ---- Scroll hint ---- */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: fadeIn 1s ease 1.5s both;
+}
+
+.hero-scroll-arrow {
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  animation: scroll-hint 2s ease-in-out 2s infinite;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .hero-stat       { padding: 0.5rem 1rem; }
+  .hero-stat:first-child { padding-left: 0; }
+  .hero-stat-divider { height: 28px; }
+  .hero-vote-address { font-size: 0.68rem; }
+}

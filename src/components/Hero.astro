@@ -1,0 +1,147 @@
+---
+// src/components/Hero.astro
+---
+
+<section class="hero" id="hero">
+
+  <!-- Background layers -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-bg-glow hero-bg-glow--crimson"></div>
+    <div class="hero-bg-glow hero-bg-glow--cyan"></div>
+    <div class="hero-bg-grid"></div>
+  </div>
+
+  <div class="container hero-inner">
+
+    <!-- Badges -->
+    <div class="hero-badges">
+      <span class="badge badge-cyan">
+        <span class="badge-dot badge-dot--live"></span>
+        Active
+      </span>
+      <span class="badge badge-cyan">SFDP Approved</span>
+      <span class="badge badge-cyan">DoubleZero</span>
+      <span class="badge badge-cyan">Jito BAM</span>
+      <span class="badge badge-magenta">SONDA</span>
+      <span class="badge badge-muted">Since 2021</span>
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="hero-title">
+      Solya —<br />
+      <span class="gradient-text">Independent<br />Solana Validator</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="hero-sub">
+      Running from São Paulo, Brazil — a deliberate choice for geographic
+      decentralization. 0% commission on inflation and MEV. Always.
+      Building open-source tools for the ecosystem.
+    </p>
+
+    <!-- Stats -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value">0%</span>
+        <span class="hero-stat-label">Commission</span>
+      </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">0%</span>
+        <span class="hero-stat-label">MEV Commission</span>
+      </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">São Paulo</span>
+        <span class="hero-stat-label">Location · Brazil</span>
+      </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">4+</span>
+        <span class="hero-stat-label">Years running</span>
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="hero-ctas">
+      <a href="#stake" class="btn-primary hero-cta-primary">
+        Stake SOL with Solya
+      </a>
+      <a
+        href="https://stakewiz.com/validator/HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-secondary"
+      >
+        View on StakeWiz
+      </a>
+    </div>
+
+    <!-- Vote account with copy button -->
+    <div class="hero-vote">
+      <span class="hero-vote-label">Vote account</span>
+      <div class="hero-vote-row">
+        <code class="hero-vote-address" id="vote-address">
+          HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC
+        </code>
+        <button
+          class="hero-copy-btn"
+          id="copy-vote"
+          aria-label="Copy vote account address"
+          title="Copy address"
+        >
+          <span class="copy-icon" id="copy-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </span>
+          <span class="copy-label" id="copy-label">Copy</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="hero-scroll-arrow"></div>
+  </div>
+
+</section>
+
+<script>
+  const btn = document.getElementById('copy-vote');
+  const label = document.getElementById('copy-label');
+  const icon = document.getElementById('copy-icon');
+  const address = document.getElementById('vote-address')?.textContent?.trim() ?? '';
+
+  btn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      if (label) label.textContent = 'Copied!';
+      if (icon) icon.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>`;
+      btn.classList.add('copied');
+      setTimeout(() => {
+        if (label) label.textContent = 'Copy';
+        if (icon) icon.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>`;
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch {
+      // fallback для старих браузерів
+      const el = document.createElement('textarea');
+      el.value = address;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+  });
+</script>
