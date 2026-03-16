@@ -1,0 +1,221 @@
+---
+// src/components/SondaSection.astro
+---
+
+<section class="section sonda-section" id="sonda">
+  <div class="container">
+    <div class="sonda-inner">
+
+      <!-- Left: content -->
+      <div class="sonda-content fade-in">
+
+        <span class="section-label">Open-source project</span>
+
+        <!-- Title with SONDA acronym highlighted -->
+        <h2 class="sonda-title">
+          <span class="sonda-acronym-line">
+            <span class="sonda-letter">S</span><span class="sonda-word">olana</span>
+          </span>
+          <span class="sonda-acronym-line">
+            <span class="sonda-letter">O</span><span class="sonda-word">bservatory for</span>
+          </span>
+          <span class="sonda-acronym-line">
+            <span class="sonda-letter">N</span><span class="sonda-word">etwork</span>
+          </span>
+          <span class="sonda-acronym-line">
+            <span class="sonda-letter">D</span><span class="sonda-word">ecentralization</span>
+          </span>
+          <span class="sonda-acronym-line">
+            <span class="sonda-letter">A</span><span class="sonda-word">nalysis</span>
+          </span>
+        </h2>
+
+        <p class="sonda-desc">
+          Back in 2023, while choosing a datacenter for Solya, we ran into a
+          problem: geolocation data was inconsistent across every tool we checked
+          — the same validator IP showing different countries depending on the source.
+          But it wasn't just about accuracy. We wanted to understand which
+          datacenters were already overloaded with stake, and which regions
+          were genuinely underserved. So we wrote a script to find out.
+          Then kept going.
+        </p>
+
+        <p class="sonda-desc">
+          SONDA now collects data across the full validator set, cross-verifies
+          it from multiple geo sources, and calculates the metrics that actually
+          matter for understanding how decentralized Solana really is.
+          Open source, free to use, built for the whole ecosystem.
+        </p>
+
+        <!-- Feature list -->
+        <ul class="sonda-features">
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>Multi-source geolocation with cross-verification and discrepancy detection</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>Decentralization metrics: Nakamoto Coefficient, HHI, Gini, Shannon Entropy</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>DoubleZero device mapping with protocol-verified geo overrides</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>Jito BAM endpoint monitoring and IBRL performance metrics per validator</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>Datacenter and ASN analysis — who controls what, and how much</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>Endpoint reachability monitoring across Jito, Harmonic, and Solana infrastructure</span>
+          </li>
+          <li class="sonda-feature">
+            <span class="sonda-feature-icon">⊕</span>
+            <span>All three clusters: mainnet-beta, testnet, devnet</span>
+          </li>
+        </ul>
+
+        <!-- CTAs -->
+        <div class="sonda-ctas">
+          <a
+            href="https://github.com/SolyaUk/sonda"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            View on GitHub
+          </a>
+          <a
+            href="https://sonda.network"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary sonda-network-btn"
+            title="Dashboard in development"
+          >
+            <span class="sonda-dot"></span>
+            sonda.network
+            <span class="sonda-soon-tag">beta soon</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right: dashboard preview -->
+      <div class="sonda-preview fade-in">
+        <div class="sonda-preview-card">
+
+          <!-- Header -->
+          <div class="sonda-preview-header">
+            <div class="sonda-preview-header-left">
+              <span class="sonda-preview-dot sonda-preview-dot--red"></span>
+              <span class="sonda-preview-dot sonda-preview-dot--yellow"></span>
+              <span class="sonda-preview-dot sonda-preview-dot--green"></span>
+            </div>
+            <span class="sonda-preview-title">sonda.network · mainnet-beta</span>
+            <span class="badge badge-magenta">preview</span>
+          </div>
+
+          <!-- Cluster summary row -->
+          <div class="sonda-summary-row">
+            <div class="sonda-summary-item">
+              <span class="sonda-summary-value">800</span>
+              <span class="sonda-summary-label">validators</span>
+            </div>
+            <div class="sonda-summary-item">
+              <span class="sonda-summary-value">4,975</span>
+              <span class="sonda-summary-label">gossip nodes</span>
+            </div>
+            <div class="sonda-summary-item">
+              <span class="sonda-summary-value">94</span>
+              <span class="sonda-summary-label">endpoints</span>
+            </div>
+            <div class="sonda-summary-item">
+              <span class="sonda-summary-value">95</span>
+              <span class="sonda-summary-label">DZ devices</span>
+            </div>
+          </div>
+
+          <!-- Decentralization metrics -->
+          <div class="sonda-metrics-block">
+            <div class="sonda-metrics-label">Decentralization metrics</div>
+            <div class="sonda-metrics-grid">
+              <div class="sonda-metric-row">
+                <span class="sonda-metric-name">Nakamoto (country)</span>
+                <div class="sonda-metric-bar-wrap">
+                  <div class="sonda-metric-bar" style="width: 38%"></div>
+                </div>
+                <span class="sonda-metric-val">—</span>
+              </div>
+              <div class="sonda-metric-row">
+                <span class="sonda-metric-name">Nakamoto (ASN)</span>
+                <div class="sonda-metric-bar-wrap">
+                  <div class="sonda-metric-bar" style="width: 22%"></div>
+                </div>
+                <span class="sonda-metric-val">—</span>
+              </div>
+              <div class="sonda-metric-row">
+                <span class="sonda-metric-name">Gini coefficient</span>
+                <div class="sonda-metric-bar-wrap">
+                  <div class="sonda-metric-bar sonda-metric-bar--warn" style="width: 71%"></div>
+                </div>
+                <span class="sonda-metric-val">—</span>
+              </div>
+              <div class="sonda-metric-row">
+                <span class="sonda-metric-name">Shannon entropy</span>
+                <div class="sonda-metric-bar-wrap">
+                  <div class="sonda-metric-bar sonda-metric-bar--good" style="width: 58%"></div>
+                </div>
+                <span class="sonda-metric-val">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Geo distribution snippet -->
+          <div class="sonda-geo-block">
+            <div class="sonda-metrics-label">Top stake concentration</div>
+            <div class="sonda-geo-rows">
+              <div class="sonda-geo-row">
+                <span class="sonda-geo-flag">🇺🇸</span>
+                <span class="sonda-geo-name">United States</span>
+                <div class="sonda-geo-bar-wrap">
+                  <div class="sonda-geo-bar" style="width: 62%"></div>
+                </div>
+              </div>
+              <div class="sonda-geo-row">
+                <span class="sonda-geo-flag">🇩🇪</span>
+                <span class="sonda-geo-name">Germany</span>
+                <div class="sonda-geo-bar-wrap">
+                  <div class="sonda-geo-bar" style="width: 11%"></div>
+                </div>
+              </div>
+              <div class="sonda-geo-row">
+                <span class="sonda-geo-flag">🇳🇱</span>
+                <span class="sonda-geo-name">Netherlands</span>
+                <div class="sonda-geo-bar-wrap">
+                  <div class="sonda-geo-bar" style="width: 7%"></div>
+                </div>
+              </div>
+              <div class="sonda-geo-row sonda-geo-row--highlight">
+                <span class="sonda-geo-flag">🇧🇷</span>
+                <span class="sonda-geo-name">Brazil</span>
+                <div class="sonda-geo-bar-wrap">
+                  <div class="sonda-geo-bar sonda-geo-bar--cyan" style="width: 3%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="sonda-preview-note">
+            Values shown are illustrative. Live data at sonda.network — in development.
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
