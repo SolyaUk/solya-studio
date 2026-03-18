@@ -1,0 +1,229 @@
+---
+// src/pages/security.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Security & Responsibility | Solya Solana Validator"
+  description="How Solya Solana Validator handles infrastructure security, key management, and staking safety. Independent validator running since 2021 in São Paulo, Brazil."
+>
+  <div class="security-page">
+    <div class="container">
+
+      <div class="security-header">
+        <a href="/" class="security-back">← Back</a>
+        <div class="security-label-wrap">
+        <span class="section-label">solya.studio/security</span>
+        </div>
+        <h1 class="security-title">Security &amp; Responsibility</h1>
+        <p class="security-intro">
+          Running a Solana validator since 2021 means security isn't a checklist —
+          it's part of daily operations. Here's how Solya is managed and what
+          that means for stakers.
+        </p>
+      </div>
+
+      <div class="security-sections">
+
+        <div class="security-section">
+          <h2 class="security-section-title">Your funds are safe by design</h2>
+          <div class="security-content">
+            <p>
+              Staking on Solana is non-custodial. Solya — like any validator on
+              the network — has no access to your wallet or staked SOL. The
+              Solana protocol handles reward distribution automatically at the
+              end of each epoch. You can unstake at any time; funds become
+              available once the current epoch closes, typically within 2–3 days.
+            </p>
+          </div>
+        </div>
+
+        <div class="security-section">
+          <h2 class="security-section-title">Infrastructure</h2>
+          <div class="security-content">
+            <p>
+              The node runs on dedicated hardware in São Paulo, Brazil (Vultr/Edgevana,
+              AS20473) — a deliberate location choice for Solana's geographic
+              decentralization. The server is hardened, access is restricted to
+              key-based authentication, and the validator client follows Anza and
+              Solana Foundation release guidance.
+            </p>
+            <p>
+              The node is connected to DoubleZero for filtered, low-latency
+              validator communication, and runs the Jito BAM client for
+              verifiable, tamper-resistant transaction scheduling.
+            </p>
+          </div>
+        </div>
+
+        <div class="security-section">
+          <h2 class="security-section-title">Key management</h2>
+          <div class="security-content">
+            <p>
+              Identity key, vote key, and withdraw authority are fully separated.
+              The withdraw authority is stored offline and never touches the
+              validator server. Commission is set to 0% and there are no plans to
+              change that. If it ever did change, it would be announced publicly
+              well in advance.
+            </p>
+            <div class="security-keys">
+              <div class="security-key-row">
+                <span class="security-key-label">Identity</span>
+                <code class="security-key-value">HwN6eoEe9N3kwHi66hpQDBMFPk6ASQGthWKPX5MZmisp</code>
+              </div>
+              <div class="security-key-row">
+                <span class="security-key-label">Vote account</span>
+                <code class="security-key-value">HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-section">
+          <h2 class="security-section-title">Safe staking practices</h2>
+          <div class="security-content">
+            <p>
+              Keep your seed phrase offline and never share it. Use a trusted
+              wallet —
+              <a href="https://phantom.app" target="_blank" rel="noopener noreferrer">Phantom</a>
+              or
+              <a href="https://solflare.com" target="_blank" rel="noopener noreferrer">Solflare</a>
+              both support native Solana staking. Stake through your wallet's
+              staking interface or the options on the
+              <a href="/#stake">Stake</a> page — never send SOL directly to
+              any address.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .security-page {
+    padding-top: calc(64px + 3rem);
+    padding-bottom: 5rem;
+    min-height: 100vh;
+  }
+
+  .security-header {
+    max-width: 720px;
+    margin-bottom: 3.5rem;
+  }
+
+  .security-back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s ease;
+  }
+  .security-back:hover {
+    color: var(--accent-cyan);
+    opacity: 1;
+  }
+
+  .security-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .security-intro {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .security-sections {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 820px;
+  }
+
+  .security-section {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .security-section:last-child {
+    border-bottom: none;
+  }
+
+  .security-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    margin-bottom: 0.875rem;
+  }
+
+  .security-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .security-content p {
+    font-size: 0.925rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .security-keys {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .security-key-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .security-key-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .security-key-value {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-sm);
+    word-break: break-all;
+  }
+
+  .security-label-wrap {
+  margin-bottom: 0.25rem;
+    }
+
+  @media (max-width: 640px) {
+    .security-section {
+      padding: 1.5rem;
+    }
+    .security-key-label {
+      min-width: 80px;
+    }
+  }
+</style>
