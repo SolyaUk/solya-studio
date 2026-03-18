@@ -1260,3 +1260,346 @@ code, .mono {
     grid-template-columns: 110px 1fr 28px;
   }
 }
+
+
+
+
+
+
+
+
+/* ============================================================
+   STAKING SECTION
+   ============================================================ */
+
+.staking-section {
+  border-top: 1px solid var(--border);
+}
+
+/* ---- Native staking ---- */
+.staking-native {
+  margin-bottom: 2.5rem;
+}
+
+.staking-native-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.staking-native-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-cyan);
+  background: rgba(0, 229, 200, 0.08);
+  border: 1px solid var(--border-accent);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.staking-native-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.staking-widget-wrap {
+  display: block;
+  width: 100%;
+  max-width: 472px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-card);
+  margin-bottom: 1rem;
+}
+
+.staking-widget-wrap iframe {
+  display: block;
+  width: 100%;
+  height: 302px;
+  border: none;
+}
+
+@media (max-width: 520px) {
+  .staking-widget-wrap {
+    max-width: 100%;
+  }
+  .staking-widget-wrap iframe {
+    height: 470px;
+  }
+}
+
+/* ---- Manual staking instructions ---- */
+.staking-manual {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  width: 100%;
+}
+
+.staking-manual-summary {
+  padding: 0.875rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease, background 0.2s ease;
+  background: var(--bg-card);
+}
+.staking-manual-summary::-webkit-details-marker { display: none; }
+.staking-manual-summary::before {
+  content: '›';
+  font-size: 1.1rem;
+  color: var(--accent-cyan);
+  transition: transform 0.2s ease;
+  display: inline-block;
+  line-height: 1;
+}
+details[open] .staking-manual-summary::before { transform: rotate(90deg); }
+.staking-manual-summary:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.staking-manual-content {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.staking-manual-intro {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.staking-manual-wallet-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.staking-manual-wallet-name {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.staking-manual-wallet-name a { color: var(--text-primary); text-decoration: none; }
+.staking-manual-wallet-name a:hover { color: var(--accent-cyan); opacity: 1; }
+
+.staking-manual-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.staking-manual-step {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+}
+
+.staking-step-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 229, 200, 0.08);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.staking-manual-step strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  margin-bottom: 0.2rem;
+}
+
+.staking-manual-step p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.staking-manual-address {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border);
+}
+
+.staking-manual-address-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.staking-manual-address-value {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  word-break: break-all;
+}
+
+/* ---- Liquid staking ---- */
+.staking-liquid {
+  margin-bottom: 2.5rem;
+}
+
+.staking-liquid-label,
+.staking-dashboards-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.875rem;
+}
+
+.staking-liquid-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.staking-liquid-card {
+  background: var(--bg-card);
+  padding: 1.25rem 1.5rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.2s ease;
+}
+.staking-liquid-card:hover { background: var(--bg-card-hover); opacity: 1; }
+
+.staking-liquid-card-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.staking-liquid-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.staking-liquid-token {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+}
+
+.staking-liquid-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ---- Dashboards ----
+   Логіка breakpoints:
+   ≥ 860px  → 6 колонок (всі в 1 рядок при 6 картках)
+   500–860px → 3 колонки (рівні рядки по 3)
+   < 500px  → 2 колонки (рядки по 2)
+   
+   При непарній кількості на мобільному — остання картка
+   розтягується на всю ширину (займає "перше місце" в рядку).
+*/
+.staking-dashboards-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.staking-dashboard-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.875rem 1rem;
+  background: var(--bg-card);
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.staking-dashboard-link:hover { background: var(--bg-card-hover); opacity: 1; }
+
+.staking-dashboard-name {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Виправлений контраст — text-secondary замість text-muted */
+.staking-dashboard-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  line-height: 1.4;
+}
+
+/* ---- Responsive ---- */
+
+/* Планшет: 3 колонки — рівні рядки по 3 */
+@media (max-width: 860px) {
+  .staking-dashboards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Мобільний: 2 колонки */
+@media (max-width: 500px) {
+  .staking-liquid-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .staking-dashboards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Непарна остання картка — на всю ширину */
+  .staking-dashboard-link:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}

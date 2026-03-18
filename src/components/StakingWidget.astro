@@ -1,0 +1,201 @@
+---
+// src/components/StakingWidget.astro
+const VOTE     = 'HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC';
+const IDENTITY = 'HwN6eoEe9N3kwHi66hpQDBMFPk6ASQGthWKPX5MZmisp';
+
+// Зовнішні дашборди — додай новий рядок коли зʼявиться
+const dashboards = [
+  { label: 'StakeWiz',       url: `https://stakewiz.com/validator/${VOTE}`,                                                                  desc: 'Performance & uptime' },
+  { label: 'Validators.app', url: `https://www.validators.app/validators/${IDENTITY}?locale=en&network=mainnet`,                              desc: 'Network score & history' },
+  { label: 'JPool',          url: `https://app.jpool.one/validators/${VOTE}?activeTab=performance`,                                           desc: 'Direct staking performance' },
+  { label: 'DoubleZero',     url: `https://doublezero.xyz/dzdp/eligible-validators/${IDENTITY}/delegation-criteria`,                         desc: 'DZ delegation criteria' },
+  { label: 'IBRL',           url: `https://ibrl.wtf/validator/${IDENTITY}/`,                                                                  desc: 'Block-building quality' },
+  { label: 'SONDA',          url: `https://sonda.network/validator/${IDENTITY}/`,                                                                                    desc: 'Network decentralization' },
+];
+---
+
+<section class="section staking-section" id="stake">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">Stake with Solya</span>
+      <h2 class="section-title">Start earning.<br />0% commission, always.</h2>
+      <p class="section-desc">
+        Stake directly below using the native widget, or choose liquid staking
+        through BlazeStake or JPool — you'll receive a liquid token you can
+        use in DeFi while your SOL keeps earning.
+      </p>
+    </div>
+
+    <!-- Native staking widget -->
+    <div class="staking-native fade-in">
+      <div class="staking-native-label">
+        <span class="staking-native-tag">Native staking</span>
+        <span class="staking-native-hint">Stake directly to the validator</span>
+      </div>
+
+      <!-- Iframe: inline width/height removed — handled by CSS -->
+      <div class="staking-widget-wrap">
+        <iframe
+          id="staking-kiwi-widget"
+          scrolling="no"
+          frameborder="0"
+          allowtransparency="true"
+          allowfullscreen="true"
+          title="Staking Kiwi widget — Solya Validator"
+          src={`https://widget.staking.kiwi/?validator=${VOTE}&theme=dark`}
+        ></iframe>
+      </div>
+
+      <!-- Manual staking instructions -->
+      <details class="staking-manual">
+        <summary class="staking-manual-summary">
+          How to stake manually via Phantom or Solflare
+        </summary>
+        <div class="staking-manual-content">
+
+          <p class="staking-manual-intro">
+            No widget needed — you can stake directly from any Solana wallet.
+          </p>
+
+          <!-- Phantom -->
+          <div class="staking-manual-wallet-block">
+            <div class="staking-manual-wallet-name">
+              <a href="https://phantom.app" target="_blank" rel="noopener noreferrer">Phantom</a>
+            </div>
+            <div class="staking-manual-steps">
+              <div class="staking-manual-step">
+                <span class="staking-step-num">1</span>
+                <div>
+                  <strong>Open Phantom and go to your SOL balance</strong>
+                  <p>Tap on SOL in your asset list to open the token detail screen.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">2</span>
+                <div>
+                  <strong>Open the menu and choose Native Staking</strong>
+                  <p>Tap <code>... More</code> → <code>Stake SOL</code> → <code>Native Staking</code>. Phantom hides this to promote their liquid token — it's a few taps deeper.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">3</span>
+                <div>
+                  <strong>Search for Solya</strong>
+                  <p>Type <code>Solya</code> in the validator search, or paste the vote account address below.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">4</span>
+                <div>
+                  <strong>Enter amount and confirm</strong>
+                  <p>Commission should show <code>0.00%</code>. Confirm the transaction.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Solflare -->
+          <div class="staking-manual-wallet-block">
+            <div class="staking-manual-wallet-name">
+              <a href="https://solflare.com" target="_blank" rel="noopener noreferrer">Solflare</a>
+            </div>
+            <div class="staking-manual-steps">
+              <div class="staking-manual-step">
+                <span class="staking-step-num">1</span>
+                <div>
+                  <strong>Open the Staking tab</strong>
+                  <p>In Solflare, go to the Staking section from the main navigation.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">2</span>
+                <div>
+                  <strong>Search for Solya and stake</strong>
+                  <p>Type <code>Solya</code> or paste the vote account, enter your amount, confirm.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vote account -->
+          <div class="staking-manual-address">
+            <span class="staking-manual-address-label">Vote account</span>
+            <code class="staking-manual-address-value" id="manual-vote-addr">{VOTE}</code>
+            <button class="hero-copy-btn" id="copy-manual-vote" aria-label="Copy vote account">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy
+            </button>
+          </div>
+
+        </div>
+      </details>
+    </div>
+
+    <!-- Liquid staking -->
+    <div class="staking-liquid fade-in">
+      <div class="staking-liquid-label">Liquid staking</div>
+      <div class="staking-liquid-grid">
+        <a href={`https://stake.solblaze.org/app/?validator=${VOTE}`} target="_blank" rel="noopener noreferrer" class="staking-liquid-card">
+          <div class="staking-liquid-card-top">
+            <span class="staking-liquid-name">BlazeStake</span>
+            <span class="staking-liquid-token">→ bSOL</span>
+          </div>
+          <p class="staking-liquid-desc">Stake via BlazeStake and receive bSOL — a liquid token usable across Solana DeFi.</p>
+        </a>
+        <a href={`https://app.jpool.one/direct-staking?vote=${VOTE}`} target="_blank" rel="noopener noreferrer" class="staking-liquid-card">
+          <div class="staking-liquid-card-top">
+            <span class="staking-liquid-name">JPool</span>
+            <span class="staking-liquid-token">→ jSOL</span>
+          </div>
+          <p class="staking-liquid-desc">Direct staking through JPool — your stake goes to Solya, you receive jSOL with extra DeFi yield opportunities.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- External dashboards -->
+    <div class="staking-dashboards fade-in">
+      <div class="staking-dashboards-label">Validator on external dashboards</div>
+      <div class="staking-dashboards-grid">
+        {dashboards.map((d) => (
+          <a href={d.url} target="_blank" rel="noopener noreferrer" class="staking-dashboard-link">
+            <span class="staking-dashboard-name">{d.label}</span>
+            <span class="staking-dashboard-desc">{d.desc}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://widget.staking.kiwi/js/widget.min.js"></script>
+
+<script>
+  function updateWidgetTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const iframe = document.getElementById('staking-kiwi-widget') as HTMLIFrameElement | null;
+    if (!iframe) return;
+    const theme = isDark ? 'dark' : 'light';
+    const next = iframe.src.replace(/theme=(dark|light)/, `theme=${theme}`);
+    if (iframe.src !== next) iframe.src = next;
+  }
+  updateWidgetTheme();
+  document.getElementById('theme-toggle')?.addEventListener('click', () => setTimeout(updateWidgetTheme, 50));
+
+  const copyBtn = document.getElementById('copy-manual-vote');
+  const addrEl  = document.getElementById('manual-vote-addr');
+  copyBtn?.addEventListener('click', async () => {
+    const addr = addrEl?.textContent?.trim() ?? '';
+    try {
+      await navigator.clipboard.writeText(addr);
+      if (copyBtn) copyBtn.textContent = '✓ Copied!';
+      setTimeout(() => {
+        if (copyBtn) copyBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy`;
+      }, 2000);
+    } catch { /* silent */ }
+  });
+</script>
