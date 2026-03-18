@@ -1603,3 +1603,235 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
     grid-column: 1 / -1;
   }
 }
+
+
+
+
+
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-block: 2.5rem 2rem;
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ---- Top row: лого + nav + соцмережі в один рядок на десктопі ---- */
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.footer-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.footer-logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* Nav — між лого і соцмережами на десктопі */
+.footer-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* Компенсуємо внутрішній padding посилань щоб вирівняти з лого */
+  margin-left: -0.65rem;
+  flex: 1;
+}
+
+.footer-nav-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  opacity: 1;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--bg-card);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+}
+
+.footer-social-link:hover {
+  color: var(--accent-cyan);
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  opacity: 1;
+}
+
+/* ---- Divider ---- */
+.footer-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ---- Bottom row ---- */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-vote {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.footer-vote-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.footer-vote-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.footer-vote-addr {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  word-break: break-all;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.footer-vote-btn:hover .footer-vote-addr {
+  color: var(--accent-cyan);
+}
+
+.footer-vote-copied {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-cyan);
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.footer-vote-addr.hidden  { opacity: 0; }
+.footer-vote-copied.visible { opacity: 1; }
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.footer-copy a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-copy a:hover {
+  color: var(--accent-cyan);
+  opacity: 1;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .footer-top {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+    align-items: center;
+  }
+
+  .footer-logo {
+    order: 1;
+    flex: 1;
+  }
+
+  .footer-socials {
+    order: 2;
+  }
+
+  .footer-nav {
+    order: 3;
+    width: 100%;
+    flex: none;
+    margin-left: -0.65rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .footer-copy {
+    white-space: normal;
+  }
+
+  .footer-vote-addr {
+    font-size: 0.62rem;
+  }
+}
