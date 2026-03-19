@@ -6,11 +6,11 @@ const IDENTITY = 'HwN6eoEe9N3kwHi66hpQDBMFPk6ASQGthWKPX5MZmisp';
 // Зовнішні дашборди — додай новий рядок коли зʼявиться
 const dashboards = [
   { label: 'StakeWiz',       url: `https://stakewiz.com/validator/${VOTE}`,                                                                  desc: 'Performance & uptime' },
-  { label: 'Validators.app', url: `https://www.validators.app/validators/${IDENTITY}?locale=en&network=mainnet`,                              desc: 'Network score & history' },
-  { label: 'JPool',          url: `https://app.jpool.one/validators/${VOTE}?activeTab=performance`,                                           desc: 'Direct staking performance' },
-  { label: 'DoubleZero',     url: `https://doublezero.xyz/dzdp/eligible-validators/${IDENTITY}/delegation-criteria`,                         desc: 'DZ delegation criteria' },
-  { label: 'IBRL',           url: `https://ibrl.wtf/validator/${IDENTITY}/`,                                                                  desc: 'Block-building quality' },
-  { label: 'SONDA',          url: `https://sonda.network/validator/${IDENTITY}/`,                                                                                    desc: 'Network decentralization' },
+  { label: 'Validators.app', url: `https://www.validators.app/validators/${IDENTITY}?locale=en&network=mainnet`,                             desc: 'Validator Details & network' },
+  { label: 'JPool',          url: `https://app.jpool.one/validators/${VOTE}?activeTab=performance`,                                          desc: 'Performance & history' },
+  { label: 'DoubleZero',     url: `https://doublezero.xyz/dzdp/eligible-validators/${IDENTITY}/delegation-criteria`,                         desc: 'DoubleZero Validator Dashboard' },
+  { label: 'IBRL',           url: `https://ibrl.wtf/validator/${IDENTITY}/`,                                                                 desc: 'Block-building quality' },
+  { label: 'SONDA',          url: `https://sonda.network/validator/${IDENTITY}/`,                                                            desc: 'Network decentralization' },
 ];
 ---
 
@@ -45,6 +45,10 @@ const dashboards = [
           title="Staking Kiwi widget — Solya Validator"
           src={`https://widget.staking.kiwi/?validator=${VOTE}&theme=dark`}
         ></iframe>
+      </div>
+      <div id="widget-fallback" class="widget-hidden staking-fallback-block">
+        <p>The Staking Kiwi widget is temporarily unavailable. Use the manual instructions below:
+        </p>
       </div>
 
       <!-- Manual staking instructions -->
@@ -198,4 +202,24 @@ const dashboards = [
       }, 2000);
     } catch { /* silent */ }
   });
+
+  // Показати fallback якщо віджет не завантажився
+  const widgetWrap = document.querySelector('.staking-widget-wrap');
+  const fallback = document.getElementById('widget-fallback');
+
+  setTimeout(() => {
+    // Якщо iframe недоступний або показує помилку — показати fallback
+    const iframe = document.getElementById('staking-kiwi-widget') as HTMLIFrameElement | null;
+    if (!iframe) return;
+    try {
+      // Якщо RPC заблокований, iframe буде нульової висоти або недоступний
+      if (iframe.contentDocument === null) {
+        widgetWrap?.classList.add('widget-hidden');
+        fallback?.classList.remove('widget-hidden');
+      }
+    } catch {
+      // cross-origin — значить iframe завантажився, але RPC може не працювати
+      // Лишаємо як є, бо частково показує дані
+    }
+  }, 5000);
 </script>

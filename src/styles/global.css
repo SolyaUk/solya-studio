@@ -1333,6 +1333,22 @@ code, .mono {
   }
 }
 
+.widget-hidden { display: none; }
+
+.staking-fallback-block {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  margin-bottom: 1rem;
+}
+
+.staking-fallback-block p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 /* ---- Manual staking instructions ---- */
 .staking-manual {
   border: 1px solid var(--border);
