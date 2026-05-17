@@ -1,0 +1,130 @@
+---
+// src/components/NetworkContributions.astro
+const ALPENGLOW_IDENTITY = '2CY5tXmmEAQ5bwBdv4Yt74T4Gjfz92h1vbETrBdBWNj6';
+const ALPENGLOW_VOTE     = '2qdeoX3GL1Gpvf8g5XAF2TmSsbaCmzTv3TGmimnZcHQW';
+---
+
+<section class="section ecosystem-section" id="ecosystem">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">Beyond running a node</span>
+      <h2 class="section-title">Active in the ecosystem</h2>
+      <p class="section-desc">
+        Things Solya does for Solana beyond keeping the mainnet validator
+        online: volunteering for early protocol testing, building open-source
+        tooling, and shipping public goods together with the community.
+      </p>
+    </div>
+
+    <div class="ecosystem-grid">
+
+      <!-- Alpenglow Genesis -->
+      <article class="ecosystem-card ecosystem-card--featured fade-in">
+        <div class="ecosystem-card-top">
+          <div class="ecosystem-card-icon" aria-hidden="true">🏔</div>
+          <span class="ecosystem-tag ecosystem-tag--cyan">Alpenglow community cluster</span>
+        </div>
+        <h3 class="ecosystem-card-title">Alpenglow Genesis Validator</h3>
+        <p class="ecosystem-card-body">
+          Solya joined the Alpenglow community test cluster in the second
+          wave (May 15, 2026, 86 validators). The initiative was proposed
+          by the Solana Foundation on a community call. Solya was glad to
+          step in. The point is simple: volunteer help so the upcoming
+          consensus change is tested in real conditions, and the eventual
+          mainnet switch happens smoothly.
+        </p>
+
+        <div class="ecosystem-keys">
+          <div class="ecosystem-key-row">
+            <span class="ecosystem-key-label">Identity</span>
+            <code class="ecosystem-key-value">{ALPENGLOW_IDENTITY}</code>
+          </div>
+          <div class="ecosystem-key-row">
+            <span class="ecosystem-key-label">Vote</span>
+            <code class="ecosystem-key-value">{ALPENGLOW_VOTE}</code>
+          </div>
+        </div>
+
+        <p class="ecosystem-card-note">
+          Alpenglow cluster only · not for delegation
+        </p>
+      </article>
+
+      <!-- Colosseum Frontier -->
+      <article class="ecosystem-card fade-in">
+        <div class="ecosystem-card-top">
+          <div class="ecosystem-card-icon" aria-hidden="true">🏟</div>
+          <span class="ecosystem-tag ecosystem-tag--magenta">Submitted · May 2026</span>
+        </div>
+        <h3 class="ecosystem-card-title">Colosseum Frontier 2026</h3>
+        <p class="ecosystem-card-body">
+          Submitted SONDA to the Colosseum Frontier Hackathon
+          (April 6 to May 11). Shipped during the hackathon: a live public
+          dashboard at sonda.network covering all three Solana clusters,
+          cross-verified geolocation, infrastructure monitoring, per-validator
+          pages, and event alerts via Telegram and Twitter. Coming next:
+          per-datacenter dashboards, historical timelines, and tactical
+          alerts for operators.
+        </p>
+
+        <div class="ecosystem-card-links">
+          <a
+            href="https://arena.colosseum.org/projects/explore/sonda"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ecosystem-card-link"
+          >
+            <span>arena.colosseum.org / sonda</span>
+            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17L17 7"></path>
+              <path d="M7 7h10v10"></path>
+            </svg>
+          </a>
+          <a
+            href="https://sonda.network"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ecosystem-card-link"
+          >
+            <span>sonda.network</span>
+            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17L17 7"></path>
+              <path d="M7 7h10v10"></path>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Open-source tooling -->
+      <article class="ecosystem-card fade-in">
+        <div class="ecosystem-card-top">
+          <div class="ecosystem-card-icon" aria-hidden="true">🛠</div>
+          <span class="ecosystem-tag">Public goods</span>
+        </div>
+        <h3 class="ecosystem-card-title">Open-source tooling</h3>
+        <p class="ecosystem-card-body">
+          SONDA, the validator website, and other operator tools are open
+          source. All the code lives on GitHub. Anyone can browse it, run
+          their own instance, or use parts of it in their own work.
+        </p>
+
+        <div class="ecosystem-card-links">
+          <a
+            href="https://github.com/SolyaUk"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ecosystem-card-link"
+          >
+            <span>github.com/SolyaUk</span>
+            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17L17 7"></path>
+              <path d="M7 7h10v10"></path>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>

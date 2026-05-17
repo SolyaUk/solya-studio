@@ -8,7 +8,7 @@ Website for **Solya** — an independent Solana validator running since 2021 in 
 
 ## About
 
-Solya is a single-operator Solana validator with 0% commission on inflation rewards and MEV. Hosted in South America for geographic decentralization, connected to DoubleZero and running the Jito BAM client.
+Solya is a single-operator Solana validator with 0% commission on inflation rewards and MEV. Hosted in South America for geographic decentralization, connected to DoubleZero and running the Jito BAM client. The same operator also builds [SONDA](https://sonda.network) — an open-source network decentralization analysis tool — and participates in early protocol testing.
 
 This repository contains the source code for the validator's public website.
 
@@ -28,11 +28,12 @@ This repository contains the source code for the validator's public website.
 | Location | São Paulo, Brazil (AS20473) |
 | SFDP | ✓ Approved since 2021 |
 | DoubleZero | ✓ Connected (sao001-dz001) |
+| Alpenglow | ✓ Genesis validator (community test cluster, wave 2) |
 
 ## Related
 
 - [SONDA](https://github.com/SolyaUk/sonda) — Solana Observatory for Network Decentralization Analysis, an open-source network analytics tool built by the same operator
-- [sonda.network](https://sonda.network) — dashboard coming soon
+- [sonda.network](https://sonda.network) — public dashboard, live since May 2026 (Colosseum Frontier Hackathon)
 
 ## Development
 

@@ -1084,6 +1084,33 @@ code, .mono {
   letter-spacing: 0.02em;
 }
 
+/* Live indicator (зелена точка + LIVE текст у правому куті window chrome) */
+.sonda-preview-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.sonda-preview-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #28c840;
+  box-shadow: 0 0 8px rgba(40, 200, 64, 0.7);
+  animation: sonda-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sonda-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
 /* ---- Cluster summary ---- */
 .sonda-summary-row {
   display: grid;
@@ -1098,128 +1125,246 @@ code, .mono {
   padding: 0.75rem 0.875rem;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 .sonda-summary-value {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
   font-family: var(--font-display);
   line-height: 1;
+  white-space: nowrap;
+}
+
+.sonda-summary-unit {
+  font-size: 0.75em;
+  color: var(--text-secondary);
+  margin-left: 0.05em;
 }
 
 .sonda-summary-label {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  line-height: 1.25;
 }
 
-/* ---- Metrics block ---- */
-.sonda-metrics-block {
-  padding: 0.875rem 1rem;
+/* ---- Infrastructure status block ---- */
+.sonda-infra-block {
+  padding: 0.875rem 1rem 1rem;
   border-bottom: 1px solid var(--border);
 }
 
-.sonda-metrics-label {
+.sonda-block-label {
   font-size: 0.62rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.65rem;
+  font-family: var(--font-mono);
 }
 
-.sonda-metrics-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.sonda-metric-row {
+.sonda-infra-grid {
   display: grid;
-  grid-template-columns: 130px 1fr 32px;
-  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 }
 
-.sonda-metric-name {
-  font-size: 0.68rem;
+.sonda-infra-tile {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.sonda-infra-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.sonda-infra-tile-name {
+  font-size: 0.7rem;
   color: var(--text-secondary);
-  white-space: nowrap;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
-.sonda-metric-bar-wrap {
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
+.sonda-infra-tile-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sonda-infra-tile-dot--green { background: #28c840; box-shadow: 0 0 6px rgba(40, 200, 64, 0.6); }
+.sonda-infra-tile-dot--amber { background: #f0a830; box-shadow: 0 0 6px rgba(240, 168, 48, 0.6); }
+.sonda-infra-tile-dot--red   { background: #ff5f57; box-shadow: 0 0 6px rgba(255, 95, 87, 0.6); }
+
+.sonda-infra-tile-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  line-height: 1;
 }
 
-.sonda-metric-bar {
-  height: 100%;
-  background: var(--accent-magenta);
-  border-radius: 2px;
-  opacity: 0.7;
+.sonda-infra-tile-num {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-primary);
 }
-.sonda-metric-bar--warn { background: #e8c840; opacity: 0.8; }
-.sonda-metric-bar--good { background: var(--accent-cyan); opacity: 0.8; }
 
-.sonda-metric-val {
-  font-size: 0.65rem;
+.sonda-infra-tile-suffix {
+  font-size: 0.7rem;
   color: var(--text-muted);
-  text-align: right;
+  font-family: var(--font-mono);
 }
 
-/* ---- Geo block ---- */
-.sonda-geo-block {
-  padding: 0.875rem 1rem;
+.sonda-infra-tile-meta {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+/* ---- Insights block (DZ broadcast + BAM connected) ---- */
+.sonda-insights-block {
+  padding: 0.875rem 1rem 1rem;
   border-bottom: 1px solid var(--border);
 }
 
-.sonda-geo-rows {
+.sonda-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.sonda-insight-tile {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 0.6rem;
+  gap: 0.25rem;
+  position: relative;
 }
 
-.sonda-geo-row {
-  display: grid;
-  grid-template-columns: 20px 100px 1fr;
-  align-items: center;
-  gap: 0.4rem;
+.sonda-insight-tile--magenta {
+  border-left: 2px solid var(--accent-magenta);
 }
 
-.sonda-geo-flag { font-size: 0.8rem; line-height: 1; }
+.sonda-insight-tile--cyan {
+  border-left: 2px solid var(--accent-cyan);
+}
 
-.sonda-geo-name {
-  font-size: 0.68rem;
+.sonda-insight-cat {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.sonda-insight-tile--magenta .sonda-insight-cat { color: var(--accent-magenta); }
+.sonda-insight-tile--cyan    .sonda-insight-cat { color: var(--accent-cyan); }
+
+.sonda-insight-num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.sonda-insight-tile--magenta .sonda-insight-num { color: var(--accent-magenta); }
+.sonda-insight-tile--cyan    .sonda-insight-num { color: var(--accent-cyan); }
+
+.sonda-insight-desc {
+  font-size: 0.66rem;
   color: var(--text-secondary);
-  white-space: nowrap;
+  line-height: 1.35;
+  font-family: var(--font-mono);
 }
 
-.sonda-geo-bar-wrap {
-  height: 4px;
+.sonda-insight-stake {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ---- Coverage matrix (BAM x DZ adoption) ---- */
+.sonda-coverage-block {
+  padding: 0.875rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sonda-coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
   background: var(--border);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
-.sonda-geo-bar {
-  height: 100%;
-  background: var(--accent-magenta);
-  border-radius: 2px;
-  opacity: 0.5;
+.sonda-coverage-cell {
+  background: var(--bg-secondary);
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
-.sonda-geo-bar--cyan {
-  background: var(--accent-cyan);
-  opacity: 1;
+.sonda-coverage-cell--strong {
+  background: linear-gradient(
+    135deg,
+    rgba(224, 64, 170, 0.06) 0%,
+    rgba(0, 229, 200, 0.06) 100%
+  );
 }
 
-.sonda-geo-row--highlight .sonda-geo-name {
+[data-theme="light"] .sonda-coverage-cell--strong {
+  background: linear-gradient(
+    135deg,
+    rgba(192, 48, 122, 0.08) 0%,
+    rgba(0, 180, 160, 0.08) 100%
+  );
+}
+
+.sonda-coverage-cell--muted {
+  opacity: 0.65;
+}
+
+.sonda-coverage-num {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.sonda-coverage-cell--strong .sonda-coverage-num {
   color: var(--accent-cyan);
+}
+
+.sonda-coverage-cat {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
 }
 
 /* ---- Note ---- */
@@ -1228,9 +1373,24 @@ code, .mono {
   font-size: 0.68rem;
   color: var(--text-muted);
   line-height: 1.5;
-  font-style: italic;
   font-family: var(--font-mono);
-  opacity: 0.7;
+  opacity: 0.85;
+}
+
+.sonda-preview-note a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.sonda-preview-note a:hover {
+  text-decoration: underline;
+}
+
+/* Live dot inside "Open sonda.network" button */
+.sonda-dot--live {
+  background: #28c840;
+  box-shadow: 0 0 6px rgba(40, 200, 64, 0.7);
+  animation: sonda-pulse 2s ease-in-out infinite;
 }
 
 /* ---- Responsive ---- */
@@ -1241,12 +1401,12 @@ code, .mono {
   .sonda-preview {
     position: static;
   }
-  /* Кнопки на всю ширину на мобільному */
   .sonda-ctas {
     flex-direction: column;
   }
   .sonda-ctas .btn-primary,
-  .sonda-ctas .sonda-network-btn {
+  .sonda-ctas .sonda-network-btn,
+  .sonda-ctas .btn-secondary {
     width: 100%;
     justify-content: center;
   }
@@ -1256,14 +1416,225 @@ code, .mono {
   .sonda-summary-row {
     grid-template-columns: repeat(2, 1fr);
   }
-  .sonda-metric-row {
-    grid-template-columns: 110px 1fr 28px;
+  .sonda-summary-value {
+    font-size: 1.05rem;
   }
 }
 
 
 
 
+
+
+
+
+/* ============================================================
+   ECOSYSTEM / NETWORK CONTRIBUTIONS
+   ============================================================ */
+
+.ecosystem-section {
+  border-top: 1px solid var(--border);
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.ecosystem-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.ecosystem-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
+.ecosystem-card--featured {
+  border-color: var(--border-accent);
+  background: linear-gradient(
+    180deg,
+    var(--bg-card) 0%,
+    rgba(0, 229, 200, 0.025) 100%
+  );
+}
+
+[data-theme="light"] .ecosystem-card--featured {
+  background: linear-gradient(
+    180deg,
+    var(--bg-card) 0%,
+    rgba(0, 180, 160, 0.04) 100%
+  );
+}
+
+.ecosystem-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ecosystem-card-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(0, 229, 200, 0.25));
+}
+
+.ecosystem-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.ecosystem-tag--cyan {
+  color: var(--accent-cyan);
+  background: rgba(0, 229, 200, 0.08);
+  border-color: var(--border-accent);
+}
+
+.ecosystem-tag--magenta {
+  color: var(--accent-magenta);
+  background: rgba(224, 64, 170, 0.08);
+  border-color: rgba(224, 64, 170, 0.25);
+}
+
+[data-theme="light"] .ecosystem-tag--magenta {
+  background: rgba(192, 48, 122, 0.08);
+  border-color: rgba(192, 48, 122, 0.25);
+}
+
+.ecosystem-card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.ecosystem-card-body {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Keys block (Alpenglow card) */
+.ecosystem-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.ecosystem-key-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ecosystem-key-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ecosystem-key-value {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--radius-sm);
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.ecosystem-card-note {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin: 0;
+  padding-top: 0.25rem;
+  border-top: 1px dashed var(--border);
+  letter-spacing: 0.02em;
+}
+
+/* Link rows (Colosseum, Open-source cards) */
+.ecosystem-card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.ecosystem-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent-cyan);
+  text-decoration: none;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.ecosystem-card-link:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  opacity: 1;
+}
+
+.ecosystem-card-link-icon {
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ecosystem-card-link:hover .ecosystem-card-link-icon {
+  color: var(--accent-cyan);
+  transform: translate(2px, -2px);
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ecosystem-card {
+    padding: 1.4rem;
+  }
+}
 
 
 
@@ -1542,6 +1913,24 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--accent-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.staking-liquid-token::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2300e5c8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3Cpolyline points='12 5 19 12 12 19'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+[data-theme="light"] .staking-liquid-token::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2300b4a0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3Cpolyline points='12 5 19 12 12 19'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
 .staking-liquid-desc {

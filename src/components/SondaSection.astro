@@ -1,5 +1,10 @@
 ---
 // src/components/SondaSection.astro
+//
+// Snapshot values reflect a real moment of sonda.network mainnet-beta data.
+// Update when meaningfully stale. Current snapshot: epoch 972, 2026-05-16.
+// To automate later: fetch network_summary.json from data.sonda.network at
+// build time.
 ---
 
 <section class="section sonda-section" id="sonda">
@@ -32,73 +37,76 @@
 
         <p class="sonda-desc">
           Back in 2023, while choosing a datacenter for Solya, we ran into a
-          problem: geolocation data was inconsistent across every tool we checked
-          — the same validator IP showing different countries depending on the source.
-          But it wasn't just about accuracy. We wanted to understand which
-          datacenters were already overloaded with stake, and which regions
-          were genuinely underserved. So we wrote a script to find out.
-          Then kept going.
+          problem. Geolocation data was inconsistent across every tool we
+          checked: the same validator IP showing different countries depending
+          on the source. But it wasn't just about accuracy. We wanted to
+          understand which datacenters were already overloaded with stake,
+          and which regions were genuinely underserved. So we wrote a script
+          to find out. Then kept going.
         </p>
 
         <p class="sonda-desc">
-          SONDA now collects data across the full validator set, cross-verifies
-          it from multiple geo sources, and calculates the metrics that actually
-          matter for understanding how decentralized Solana really is.
-          Open source, free to use, built for the whole ecosystem.
+          SONDA grew into a wider monitoring and analytics tool for validator
+          operators. It runs every 60 seconds across all three Solana clusters
+          and surfaces the practical signals operators actually need: where
+          datacenters and ASNs are overloaded, which providers have a history
+          of outages, which endpoints are healthy right now, and how
+          DoubleZero and Jito BAM adoption is shifting across the network.
+          The public dashboard launched during the Colosseum Frontier
+          Hackathon in May 2026. Open source, free to use, built for the
+          whole ecosystem.
         </p>
 
         <!-- Feature list -->
         <ul class="sonda-features">
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>Multi-source geolocation with cross-verification and discrepancy detection</span>
+            <span>Tactical placement view: where datacenters and ASNs are overloaded, where regions are underserved</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>Decentralization metrics: Nakamoto Coefficient, HHI, Gini, Shannon Entropy</span>
+            <span>Provider history: who's been stable on the network, who has seen outages and churn</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>DoubleZero device mapping with protocol-verified geo overrides</span>
+            <span>Live endpoint reachability across Jito, Harmonic, and Solana infrastructure</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>Jito BAM endpoint monitoring and IBRL performance metrics per validator</span>
+            <span>DoubleZero adoption with protocol-verified device geo</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>Datacenter and ASN analysis — who controls what, and how much</span>
+            <span>Jito BAM monitoring and IBRL performance per validator</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>Endpoint reachability monitoring across Jito, Harmonic, and Solana infrastructure</span>
+            <span>Cross-verified geolocation as the data foundation, with discrepancies flagged</span>
           </li>
           <li class="sonda-feature">
             <span class="sonda-feature-icon">⊕</span>
-            <span>All three clusters: mainnet-beta, testnet, devnet</span>
+            <span>All three clusters covered: mainnet-beta, testnet, devnet</span>
           </li>
         </ul>
 
         <!-- CTAs -->
         <div class="sonda-ctas">
           <a
-            href="https://github.com/SolyaUk/sonda"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary"
-          >
-            View on GitHub
-          </a>
-          <a
             href="https://sonda.network"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-secondary sonda-network-btn"
-            title="Dashboard in development"
+            class="btn-primary sonda-network-btn"
           >
-            <span class="sonda-dot"></span>
-            sonda.network
-            <span class="sonda-soon-tag">beta soon</span>
+            <span class="sonda-dot sonda-dot--live"></span>
+            Open sonda.network
+          </a>
+          <a
+            href="https://github.com/SolyaUk/sonda"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            View on GitHub
           </a>
         </div>
 
@@ -108,7 +116,7 @@
       <div class="sonda-preview fade-in">
         <div class="sonda-preview-card">
 
-          <!-- Header -->
+          <!-- Header (window chrome) -->
           <div class="sonda-preview-header">
             <div class="sonda-preview-header-left">
               <span class="sonda-preview-dot sonda-preview-dot--red"></span>
@@ -116,101 +124,139 @@
               <span class="sonda-preview-dot sonda-preview-dot--green"></span>
             </div>
             <span class="sonda-preview-title">sonda.network · mainnet-beta</span>
-            <span class="badge badge-magenta">preview</span>
+            <span class="sonda-preview-live">
+              <span class="sonda-preview-live-dot"></span>
+              LIVE
+            </span>
           </div>
 
-          <!-- Cluster summary row -->
+          <!-- Primary metrics row -->
           <div class="sonda-summary-row">
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">800</span>
-              <span class="sonda-summary-label">validators</span>
+              <span class="sonda-summary-value">755</span>
+              <span class="sonda-summary-label">active validators</span>
             </div>
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">4,975</span>
-              <span class="sonda-summary-label">gossip nodes</span>
+              <span class="sonda-summary-value">0.06<span class="sonda-summary-unit">%</span></span>
+              <span class="sonda-summary-label">stake-weighted skip</span>
             </div>
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">94</span>
-              <span class="sonda-summary-label">endpoints</span>
+              <span class="sonda-summary-value">51.8<span class="sonda-summary-unit">%</span></span>
+              <span class="sonda-summary-label">stake on DZ multicast</span>
             </div>
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">95</span>
-              <span class="sonda-summary-label">DZ devices</span>
+              <span class="sonda-summary-value">19</span>
+              <span class="sonda-summary-label">superminority</span>
             </div>
           </div>
 
-          <!-- Decentralization metrics -->
-          <div class="sonda-metrics-block">
-            <div class="sonda-metrics-label">Decentralization metrics</div>
-            <div class="sonda-metrics-grid">
-              <div class="sonda-metric-row">
-                <span class="sonda-metric-name">Nakamoto (country)</span>
-                <div class="sonda-metric-bar-wrap">
-                  <div class="sonda-metric-bar" style="width: 38%"></div>
-                </div>
-                <span class="sonda-metric-val">—</span>
-              </div>
-              <div class="sonda-metric-row">
-                <span class="sonda-metric-name">Nakamoto (ASN)</span>
-                <div class="sonda-metric-bar-wrap">
-                  <div class="sonda-metric-bar" style="width: 22%"></div>
-                </div>
-                <span class="sonda-metric-val">—</span>
-              </div>
-              <div class="sonda-metric-row">
-                <span class="sonda-metric-name">Gini coefficient</span>
-                <div class="sonda-metric-bar-wrap">
-                  <div class="sonda-metric-bar sonda-metric-bar--warn" style="width: 71%"></div>
-                </div>
-                <span class="sonda-metric-val">—</span>
-              </div>
-              <div class="sonda-metric-row">
-                <span class="sonda-metric-name">Shannon entropy</span>
-                <div class="sonda-metric-bar-wrap">
-                  <div class="sonda-metric-bar sonda-metric-bar--good" style="width: 58%"></div>
-                </div>
-                <span class="sonda-metric-val">—</span>
-              </div>
+          <!-- Infrastructure status -->
+          <div class="sonda-infra-block">
+            <div class="sonda-block-label">
+              <span>Live infrastructure status</span>
             </div>
-          </div>
+            <div class="sonda-infra-grid">
+              <div class="sonda-infra-tile">
+                <div class="sonda-infra-tile-top">
+                  <span class="sonda-infra-tile-name">Jito BAM</span>
+                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
+                </div>
+                <div class="sonda-infra-tile-value">
+                  <span class="sonda-infra-tile-num">13</span>
+                  <span class="sonda-infra-tile-suffix">nodes</span>
+                </div>
+                <div class="sonda-infra-tile-meta">355 validators · 34.5% stake</div>
+              </div>
 
-          <!-- Geo distribution snippet -->
-          <div class="sonda-geo-block">
-            <div class="sonda-metrics-label">Top stake concentration</div>
-            <div class="sonda-geo-rows">
-              <div class="sonda-geo-row">
-                <span class="sonda-geo-flag">🇺🇸</span>
-                <span class="sonda-geo-name">United States</span>
-                <div class="sonda-geo-bar-wrap">
-                  <div class="sonda-geo-bar" style="width: 62%"></div>
+              <div class="sonda-infra-tile">
+                <div class="sonda-infra-tile-top">
+                  <span class="sonda-infra-tile-name">Jito Endpoints</span>
+                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--amber"></span>
                 </div>
+                <div class="sonda-infra-tile-value">
+                  <span class="sonda-infra-tile-num">58</span>
+                  <span class="sonda-infra-tile-suffix">/ 67</span>
+                </div>
+                <div class="sonda-infra-tile-meta">1 down · 8 unverified</div>
               </div>
-              <div class="sonda-geo-row">
-                <span class="sonda-geo-flag">🇩🇪</span>
-                <span class="sonda-geo-name">Germany</span>
-                <div class="sonda-geo-bar-wrap">
-                  <div class="sonda-geo-bar" style="width: 11%"></div>
+
+              <div class="sonda-infra-tile">
+                <div class="sonda-infra-tile-top">
+                  <span class="sonda-infra-tile-name">Solana RPC</span>
+                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
                 </div>
+                <div class="sonda-infra-tile-value">
+                  <span class="sonda-infra-tile-num">6</span>
+                  <span class="sonda-infra-tile-suffix">/ 6</span>
+                </div>
+                <div class="sonda-infra-tile-meta">all operational</div>
               </div>
-              <div class="sonda-geo-row">
-                <span class="sonda-geo-flag">🇳🇱</span>
-                <span class="sonda-geo-name">Netherlands</span>
-                <div class="sonda-geo-bar-wrap">
-                  <div class="sonda-geo-bar" style="width: 7%"></div>
+
+              <div class="sonda-infra-tile">
+                <div class="sonda-infra-tile-top">
+                  <span class="sonda-infra-tile-name">Harmonic</span>
+                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
                 </div>
-              </div>
-              <div class="sonda-geo-row sonda-geo-row--highlight">
-                <span class="sonda-geo-flag">🇧🇷</span>
-                <span class="sonda-geo-name">Brazil</span>
-                <div class="sonda-geo-bar-wrap">
-                  <div class="sonda-geo-bar sonda-geo-bar--cyan" style="width: 3%"></div>
+                <div class="sonda-infra-tile-value">
+                  <span class="sonda-infra-tile-num">18</span>
+                  <span class="sonda-infra-tile-suffix">/ 24</span>
                 </div>
+                <div class="sonda-infra-tile-meta">6 unverified</div>
               </div>
             </div>
           </div>
 
+          <!-- Insights row -->
+          <div class="sonda-insights-block">
+            <div class="sonda-block-label">
+              <span>Insights</span>
+            </div>
+            <div class="sonda-insights-grid">
+              <div class="sonda-insight-tile sonda-insight-tile--magenta">
+                <span class="sonda-insight-cat">DoubleZero</span>
+                <span class="sonda-insight-num">447</span>
+                <span class="sonda-insight-desc">Validators broadcasting shreds via multicast</span>
+                <span class="sonda-insight-stake">51.8% of stake</span>
+              </div>
+              <div class="sonda-insight-tile sonda-insight-tile--cyan">
+                <span class="sonda-insight-cat">Jito BAM</span>
+                <span class="sonda-insight-num">355</span>
+                <span class="sonda-insight-desc">Validators connected to BAM block builder</span>
+                <span class="sonda-insight-stake">34.5% of stake</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coverage matrix -->
+          <div class="sonda-coverage-block">
+            <div class="sonda-block-label">
+              <span>BAM × DoubleZero adoption</span>
+            </div>
+            <div class="sonda-coverage-grid">
+              <div class="sonda-coverage-cell sonda-coverage-cell--strong">
+                <span class="sonda-coverage-num">269</span>
+                <span class="sonda-coverage-cat">both</span>
+              </div>
+              <div class="sonda-coverage-cell">
+                <span class="sonda-coverage-num">86</span>
+                <span class="sonda-coverage-cat">BAM only</span>
+              </div>
+              <div class="sonda-coverage-cell">
+                <span class="sonda-coverage-num">192</span>
+                <span class="sonda-coverage-cat">DZ only</span>
+              </div>
+              <div class="sonda-coverage-cell sonda-coverage-cell--muted">
+                <span class="sonda-coverage-num">203</span>
+                <span class="sonda-coverage-cat">neither</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer note -->
           <p class="sonda-preview-note">
-            Values shown are illustrative. Live data at sonda.network — in development.
+            Snapshot · epoch 972 · 2026-05-16. View live numbers, validators,
+            endpoints, and datacenters at
+            <a href="https://sonda.network" target="_blank" rel="noopener noreferrer">sonda.network</a>.
           </p>
 
         </div>

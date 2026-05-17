@@ -17,9 +17,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <h1 class="security-title">Security &amp; Responsibility</h1>
         <p class="security-intro">
-          Running a Solana validator since 2021 means security isn't a checklist —
-          it's part of daily operations. Here's how Solya is managed and what
-          that means for stakers.
+          Running a Solana validator since 2021 means security isn't a
+          checklist, it's part of daily operations. Here's how Solya is
+          managed and what that means for stakers.
         </p>
       </div>
 
@@ -29,11 +29,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="security-section-title">Your funds are safe by design</h2>
           <div class="security-content">
             <p>
-              Staking on Solana is non-custodial. Solya — like any validator on
-              the network — has no access to your wallet or staked SOL. The
+              Staking on Solana is non-custodial. Solya, like any validator on
+              the network, has no access to your wallet or staked SOL. The
               Solana protocol handles reward distribution automatically at the
               end of each epoch. You can unstake at any time; funds become
-              available once the current epoch closes, typically within 2–3 days.
+              available once the current epoch closes, typically within 2 to 3 days.
             </p>
           </div>
         </div>
@@ -42,11 +42,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="security-section-title">Infrastructure</h2>
           <div class="security-content">
             <p>
-              The node runs on dedicated hardware in São Paulo, Brazil (Vultr/Edgevana,
-              AS20473) — a deliberate location choice for Solana's geographic
-              decentralization. The server is hardened, access is restricted to
-              key-based authentication, and the validator client follows Anza and
-              Solana Foundation release guidance.
+              The node runs on dedicated hardware in São Paulo, Brazil
+              (Vultr/Edgevana, AS20473): a deliberate location choice for
+              Solana's geographic decentralization. The server is hardened,
+              access is restricted to key-based authentication, and the
+              validator client follows Anza and Solana Foundation release
+              guidance.
             </p>
             <p>
               The node is connected to DoubleZero for filtered, low-latency
@@ -80,17 +81,66 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="security-section">
+          <h2 class="security-section-title">Alpenglow community cluster</h2>
+          <div class="security-content">
+            <p>
+              Solya also runs a validator on the Alpenglow community cluster
+              (since wave 2, May 2026). This is an isolated network with
+              completely separate identity and vote keys that have no
+              relationship to the mainnet validator or its withdraw authority.
+              Participation in the Alpenglow cluster cannot affect mainnet
+              stakers in any way: different network, different keys, no
+              shared funds.
+            </p>
+            <div class="security-keys">
+              <div class="security-key-row">
+                <span class="security-key-label">Alpenglow identity</span>
+                <code class="security-key-value">2CY5tXmmEAQ5bwBdv4Yt74T4Gjfz92h1vbETrBdBWNj6</code>
+              </div>
+              <div class="security-key-row">
+                <span class="security-key-label">Alpenglow vote</span>
+                <code class="security-key-value">2qdeoX3GL1Gpvf8g5XAF2TmSsbaCmzTv3TGmimnZcHQW</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-section">
+          <h2 class="security-section-title">Solana testnet</h2>
+          <div class="security-content">
+            <p>
+              Solya also runs a node on Solana testnet, the standard
+              pre-release network used by operators to test new Anza and
+              Agave client versions before they reach mainnet. Like the
+              Alpenglow cluster, this is an isolated environment with its
+              own identity and vote keys, fully unrelated to the mainnet
+              validator or any of its keys.
+            </p>
+            <div class="security-keys">
+              <div class="security-key-row">
+                <span class="security-key-label">Testnet identity</span>
+                <code class="security-key-value">EYbvBPU9mSPTVJrZgioTt8PGPL9Bjv5342ENBMR5X8r8</code>
+              </div>
+              <div class="security-key-row">
+                <span class="security-key-label">Testnet vote</span>
+                <code class="security-key-value">6QuNUWCjuvZYpu9hJX8Jrhyt9dszZERVsFPTTEAa3MVz</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-section">
           <h2 class="security-section-title">Safe staking practices</h2>
           <div class="security-content">
             <p>
               Keep your seed phrase offline and never share it. Use a trusted
-              wallet —
+              wallet:
               <a href="https://phantom.app" target="_blank" rel="noopener noreferrer">Phantom</a>
               or
               <a href="https://solflare.com" target="_blank" rel="noopener noreferrer">Solflare</a>
               both support native Solana staking. Stake through your wallet's
               staking interface or the options on the
-              <a href="/#stake">Stake</a> page — never send SOL directly to
+              <a href="/#stake">Stake</a> page. Never send SOL directly to
               any address.
             </p>
           </div>
