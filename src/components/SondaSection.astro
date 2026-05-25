@@ -2,7 +2,7 @@
 // src/components/SondaSection.astro
 //
 // Snapshot values reflect a real moment of sonda.network mainnet-beta data.
-// Update when meaningfully stale. Current snapshot: epoch 972, 2026-05-16.
+// Update when meaningfully stale. Current snapshot: epoch 976, 2026-05-25.
 // To automate later: fetch network_summary.json from data.sonda.network at
 // build time.
 ---
@@ -133,15 +133,15 @@
           <!-- Primary metrics row -->
           <div class="sonda-summary-row">
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">755</span>
+              <span class="sonda-summary-value">748</span>
               <span class="sonda-summary-label">active validators</span>
             </div>
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">0.06<span class="sonda-summary-unit">%</span></span>
+              <span class="sonda-summary-value">0.07<span class="sonda-summary-unit">%</span></span>
               <span class="sonda-summary-label">stake-weighted skip</span>
             </div>
             <div class="sonda-summary-item">
-              <span class="sonda-summary-value">51.8<span class="sonda-summary-unit">%</span></span>
+              <span class="sonda-summary-value">51.5<span class="sonda-summary-unit">%</span></span>
               <span class="sonda-summary-label">stake on DZ multicast</span>
             </div>
             <div class="sonda-summary-item">
@@ -162,22 +162,22 @@
                   <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
                 </div>
                 <div class="sonda-infra-tile-value">
-                  <span class="sonda-infra-tile-num">13</span>
+                  <span class="sonda-infra-tile-num">12</span>
                   <span class="sonda-infra-tile-suffix">nodes</span>
                 </div>
-                <div class="sonda-infra-tile-meta">355 validators · 34.5% stake</div>
+                <div class="sonda-infra-tile-meta">363 validators · 31.7% stake</div>
               </div>
 
               <div class="sonda-infra-tile">
                 <div class="sonda-infra-tile-top">
                   <span class="sonda-infra-tile-name">Jito Endpoints</span>
-                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--amber"></span>
+                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
                 </div>
                 <div class="sonda-infra-tile-value">
                   <span class="sonda-infra-tile-num">58</span>
-                  <span class="sonda-infra-tile-suffix">/ 67</span>
+                  <span class="sonda-infra-tile-suffix">/ 66</span>
                 </div>
-                <div class="sonda-infra-tile-meta">1 down · 8 unverified</div>
+                <div class="sonda-infra-tile-meta">0 down · 8 unverified</div>
               </div>
 
               <div class="sonda-infra-tile">
@@ -214,15 +214,15 @@
             <div class="sonda-insights-grid">
               <div class="sonda-insight-tile sonda-insight-tile--magenta">
                 <span class="sonda-insight-cat">DoubleZero</span>
-                <span class="sonda-insight-num">447</span>
+                <span class="sonda-insight-num">444</span>
                 <span class="sonda-insight-desc">Validators broadcasting shreds via multicast</span>
-                <span class="sonda-insight-stake">51.8% of stake</span>
+                <span class="sonda-insight-stake">51.5% of stake</span>
               </div>
               <div class="sonda-insight-tile sonda-insight-tile--cyan">
                 <span class="sonda-insight-cat">Jito BAM</span>
-                <span class="sonda-insight-num">355</span>
+                <span class="sonda-insight-num">363</span>
                 <span class="sonda-insight-desc">Validators connected to BAM block builder</span>
-                <span class="sonda-insight-stake">34.5% of stake</span>
+                <span class="sonda-insight-stake">31.7% of stake</span>
               </div>
             </div>
           </div>
@@ -234,19 +234,19 @@
             </div>
             <div class="sonda-coverage-grid">
               <div class="sonda-coverage-cell sonda-coverage-cell--strong">
-                <span class="sonda-coverage-num">269</span>
+                <span class="sonda-coverage-num">272</span>
                 <span class="sonda-coverage-cat">both</span>
               </div>
               <div class="sonda-coverage-cell">
-                <span class="sonda-coverage-num">86</span>
+                <span class="sonda-coverage-num">91</span>
                 <span class="sonda-coverage-cat">BAM only</span>
               </div>
               <div class="sonda-coverage-cell">
-                <span class="sonda-coverage-num">192</span>
+                <span class="sonda-coverage-num">185</span>
                 <span class="sonda-coverage-cat">DZ only</span>
               </div>
               <div class="sonda-coverage-cell sonda-coverage-cell--muted">
-                <span class="sonda-coverage-num">203</span>
+                <span class="sonda-coverage-num">188</span>
                 <span class="sonda-coverage-cat">neither</span>
               </div>
             </div>
@@ -254,7 +254,7 @@
 
           <!-- Footer note -->
           <p class="sonda-preview-note">
-            Snapshot · epoch 972 · 2026-05-16. View live numbers, validators,
+            Snapshot · epoch 976 · 2026-05-25. View live numbers, validators,
             endpoints, and datacenters at
             <a href="https://sonda.network" target="_blank" rel="noopener noreferrer">sonda.network</a>.
           </p>
