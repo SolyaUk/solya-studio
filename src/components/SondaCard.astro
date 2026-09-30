@@ -1,0 +1,75 @@
+---
+// src/components/SondaCard.astro
+// "Solya on SONDA": Solya's record as SONDA sees it. Rendered at build time
+// from SONDA data (or the committed snapshot) and refreshed in the browser
+// when the card scrolls into view. Style follows the sonda.network table.
+import { getSondaView } from '../lib/sonda-build.js';
+import { renderSondaCard } from '../lib/sonda-card.js';
+import { SONDA_CARD_METRICS, SFDP, SONDA_LINKS } from '../data/solya.js';
+
+const sonda = await getSondaView();
+const html = renderSondaCard(sonda, {
+  metrics: SONDA_CARD_METRICS,
+  sfdpStatus: SFDP.status,
+  validatorUrl: SONDA_LINKS.validator,
+  live: false,
+});
+---
+
+<div
+  class="sv-card"
+  id="sonda-card"
+  data-provider={sonda.provider}
+  data-logo={sonda.logoUrl ?? ''}
+  set:html={html}
+/>
+
+<script>
+  import { VALIDATORS_URL, fetchJson, buildView, timeAgo } from '../lib/sonda.js';
+  import { renderSondaCard } from '../lib/sonda-card.js';
+  import { VOTE, SONDA_CARD_METRICS, SFDP, SONDA_LINKS } from '../data/solya.js';
+
+  const card = document.getElementById('sonda-card');
+  let started = false;
+
+  async function refresh() {
+    if (started || !card) return;
+    started = true;
+    try {
+      const validators = await fetchJson(VALIDATORS_URL, 20000);
+      const view = buildView(validators, VOTE, null);
+      if (!view) return;
+      // The build knows the provider logo from the summary; reuse it while
+      // the provider is the same.
+      if (view.provider === card.dataset.provider && card.dataset.logo) {
+        view.logoUrl = card.dataset.logo;
+      }
+      const opts = {
+        metrics: SONDA_CARD_METRICS,
+        sfdpStatus: SFDP.status,
+        validatorUrl: SONDA_LINKS.validator,
+        live: true,
+      };
+      card.innerHTML = renderSondaCard(view, opts);
+      card.classList.add('is-live');
+      window.setInterval(() => {
+        const ago = card.querySelector('[data-sv-ago]');
+        if (ago) ago.textContent = `Live · updated ${timeAgo(view.timestamp)}`;
+      }, 30000);
+    } catch (err) {
+      // No CORS for this origin yet, or a network error: the build-time
+      // snapshot stays on screen with its date.
+      console.info('[sonda] live refresh skipped:', (err as Error)?.message || err);
+    }
+  }
+
+  if (card) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        refresh();
+      }
+    }, { rootMargin: '300px' });
+    io.observe(card);
+  }
+</script>

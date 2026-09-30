@@ -1,25 +1,37 @@
 ---
 // src/pages/security.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { getSondaView } from '../lib/sonda-build.js';
+import { VOTE, IDENTITY, ALPENGLOW, TESTNET, LOCATIONS, CURRENT_LOCATION } from '../data/solya.js';
+
+const sonda = await getSondaView();
+const storyMatches = sonda.cc === CURRENT_LOCATION.countryCode;
+const where = `${sonda.place} (${[sonda.provider, sonda.asn].filter(Boolean).join(', ')})`;
+const previous = LOCATIONS.slice(0, -1).reverse().map((l) => `${l.place} (${l.from} to ${l.to})`);
+const previousText = previous.length
+  ? `Before that, Solya Validator ran in ${previous.slice(0, -1).join(', ')}${previous.length > 1 ? ' and ' : ''}${previous[previous.length - 1]}.`
+  : '';
+const since = storyMatches ? ` since ${CURRENT_LOCATION.from}` : '';
 ---
 
 <BaseLayout
   title="Security & Responsibility | Solya Solana Validator"
-  description="How Solya Solana Validator handles infrastructure security, key management, and staking safety. Independent validator running since 2021, hosted in Singapore since May 2026."
+  description={`How Solya Solana Validator handles infrastructure security, key management and staking safety. Independent validator running since 2021, hosted in ${sonda.place}${since}.`}
 >
   <div class="security-page">
     <div class="container">
 
       <div class="security-header">
-        <a href="/" class="security-back">← Back</a>
+        <a href="/" class="security-back"><Icon name="arrowLeft" size={14} /> Back</a>
         <div class="security-label-wrap">
         <span class="section-label">solya.studio/security</span>
         </div>
         <h1 class="security-title">Security &amp; Responsibility</h1>
         <p class="security-intro">
-          Running a Solana validator since 2021 means security isn't a
-          checklist, it's part of daily operations. Here's how Solya is
-          managed and what that means for stakers.
+          Solya Validator has run on Solana since 2021, and security is part of its
+          daily routine. Here is how the validator is managed and what that
+          means for stakers.
         </p>
       </div>
 
@@ -33,7 +45,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               the network, has no access to your wallet or staked SOL. The
               Solana protocol handles reward distribution automatically at the
               end of each epoch. You can unstake at any time; funds become
-              available once the current epoch closes, typically within 2 to 3 days.
+              available when the current epoch ends.{sonda.epochHours
+                ? ` With today's faster slots an epoch lasts about ${sonda.epochHours} hours, so the wait is a day or so rather than the two to three days it used to be.`
+                : ' Epochs are shorter than they used to be, so the wait is usually about a day.'}
             </p>
           </div>
         </div>
@@ -42,19 +56,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="security-section-title">Infrastructure</h2>
           <div class="security-content">
             <p>
-              The node runs on dedicated hardware in Singapore
-              (Vultr/Edgevana, AS20473), following nearly a year of
-              operation in São Paulo, Brazil (June 2025 to May 2026).
-              The move to Singapore happened in May 2026 when Jito's BAM
-              rollout did not reach São Paulo in time. The server is
-              hardened, access is restricted to key-based authentication,
-              and the validator client follows Anza and Solana Foundation
-              release guidance.
+              The node runs on dedicated hardware in {where}.
+              {storyMatches && (
+                <>
+                  We chose the location and the provider in {CURRENT_LOCATION.from} with
+                  the help of SONDA: little stake concentration, Jito BAM and
+                  DoubleZero nodes in the same city, and an established provider
+                  whose validators perform well.
+                </>
+              )}
+              {' '}{previousText} The server is hardened, access is key-based
+              only, and new validator releases run on our testnet node before
+              they reach mainnet.
             </p>
             <p>
-              The node is connected to DoubleZero for filtered, low-latency
-              validator communication, and runs the Jito BAM client for
-              verifiable, tamper-resistant transaction scheduling.
+              The node is connected to DoubleZero{sonda.dz?.device ? ` (${sonda.dz.device})` : ''} for
+              filtered, low-latency validator communication, and runs the Jito
+              BAM client for verifiable, tamper-resistant transaction scheduling.
             </p>
           </div>
         </div>
@@ -72,11 +90,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="security-keys">
               <div class="security-key-row">
                 <span class="security-key-label">Identity</span>
-                <code class="security-key-value">HwN6eoEe9N3kwHi66hpQDBMFPk6ASQGthWKPX5MZmisp</code>
+                <code class="security-key-value">{IDENTITY}</code>
               </div>
               <div class="security-key-row">
                 <span class="security-key-label">Vote account</span>
-                <code class="security-key-value">HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC</code>
+                <code class="security-key-value">{VOTE}</code>
               </div>
             </div>
           </div>
@@ -97,11 +115,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="security-keys">
               <div class="security-key-row">
                 <span class="security-key-label">Alpenglow identity</span>
-                <code class="security-key-value">2CY5tXmmEAQ5bwBdv4Yt74T4Gjfz92h1vbETrBdBWNj6</code>
+                <code class="security-key-value">{ALPENGLOW.identity}</code>
               </div>
               <div class="security-key-row">
                 <span class="security-key-label">Alpenglow vote</span>
-                <code class="security-key-value">2qdeoX3GL1Gpvf8g5XAF2TmSsbaCmzTv3TGmimnZcHQW</code>
+                <code class="security-key-value">{ALPENGLOW.vote}</code>
               </div>
             </div>
           </div>
@@ -111,21 +129,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="security-section-title">Solana testnet</h2>
           <div class="security-content">
             <p>
-              Solya also runs a node on Solana testnet, the standard
-              pre-release network used by operators to test new Anza and
-              Agave client versions before they reach mainnet. Like the
-              Alpenglow cluster, this is an isolated environment with its
-              own identity and vote keys, fully unrelated to the mainnet
+              Solya also runs a node on Solana testnet, the network where new
+              Agave and Jito releases are tested before they reach mainnet.
+              Like the Alpenglow cluster, it is an isolated environment with
+              its own identity and vote keys, fully unrelated to the mainnet
               validator or any of its keys.
             </p>
             <div class="security-keys">
               <div class="security-key-row">
                 <span class="security-key-label">Testnet identity</span>
-                <code class="security-key-value">EYbvBPU9mSPTVJrZgioTt8PGPL9Bjv5342ENBMR5X8r8</code>
+                <code class="security-key-value">{TESTNET.identity}</code>
               </div>
               <div class="security-key-row">
                 <span class="security-key-label">Testnet vote</span>
-                <code class="security-key-value">6QuNUWCjuvZYpu9hJX8Jrhyt9dszZERVsFPTTEAa3MVz</code>
+                <code class="security-key-value">{TESTNET.vote}</code>
               </div>
             </div>
           </div>
@@ -167,7 +184,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .security-back {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--text-muted);

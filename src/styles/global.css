@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN TOKENS — DARK THEME (default)
+   DESIGN TOKENS: DARK THEME (default)
    ============================================================ */
 :root {
   --bg-primary:    #09090f;
@@ -127,7 +127,7 @@ code, .mono {
 }
 
 /* ============================================================
-   HEADER — глобальні стилі (НЕ в компоненті, щоб data-theme працював)
+   HEADER: global styles (not in the component, so data-theme selectors work)
    ============================================================ */
 .site-header {
   position: fixed;
@@ -282,7 +282,7 @@ code, .mono {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .nav { display: none; }
   .header-actions .btn-primary { display: none; }
   .mobile-menu-btn { display: flex; }
@@ -466,7 +466,7 @@ code, .mono {
   gap: 2rem;
 }
 
-/* ---- Background — dark theme ---- */
+/* ---- Background: dark theme ---- */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -507,8 +507,8 @@ code, .mono {
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
 }
 
-/* ---- Background — light theme ---- */
-/* Натхнення: денне небо з новим лого — теплий ранок */
+/* ---- Background: light theme ---- */
+/* Inspiration: a daytime sky that matches the logo, a warm morning */
 [data-theme="light"] .hero-bg-glow--crimson {
   background: radial-gradient(ellipse, rgba(255, 180, 80, 0.22) 0%, transparent 70%);
   bottom: -60px;
@@ -522,7 +522,7 @@ code, .mono {
   background: radial-gradient(ellipse, rgba(120, 180, 255, 0.2) 0%, transparent 65%);
 }
 
-/* Хмарний патерн для світлої теми */
+/* Cloud pattern for the light theme */
 [data-theme="light"] .hero-bg-grid {
   background-image:
     radial-gradient(ellipse 120px 60px at 15% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
@@ -534,7 +534,7 @@ code, .mono {
   mask-image: none;
 }
 
-/* Теплий небесний градієнт основного фону в світлій темі */
+/* Warm sky gradient for the main background in the light theme */
 [data-theme="light"] .hero {
   background: linear-gradient(
     180deg,
@@ -554,7 +554,7 @@ code, .mono {
 }
 
 .badge-muted {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   border-color: var(--border);
   background: transparent;
 }
@@ -701,10 +701,13 @@ code, .mono {
   background: var(--bg-card-hover);
 }
 
-.hero-copy-btn.copied {
+.hero-copy-btn.is-copied {
   color: var(--accent-cyan);
   border-color: var(--border-accent);
 }
+.hero-copy-btn .copy-icon-done { display: none; }
+.hero-copy-btn.is-copied .copy-icon-idle { display: none; }
+.hero-copy-btn.is-copied .copy-icon-done { display: inline-block; }
 
 /* ---- Scroll hint ---- */
 .hero-scroll-hint {
@@ -727,7 +730,7 @@ code, .mono {
 
 /* ---- Responsive ---- */
 /* ============================================================
-   HERO — MOBILE FIXES
+   HERO: MOBILE FIXES
    ============================================================ */
  
 @media (max-width: 640px) {
@@ -736,12 +739,12 @@ code, .mono {
     letter-spacing: -0.02em;
   }
  
-  /* Сховати вертикальні роздільники */
+  /* Hide vertical dividers */
   .hero-stat-divider {
     display: none;
   }
  
-  /* Статистика — 2×2 сітка */
+  /* Stats: 2x2 grid */
   .hero-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -750,7 +753,7 @@ code, .mono {
     overflow: hidden;
   }
  
-  /* Скидаємо всі стани padding — в сітці всі клітинки однакові */
+  /* Reset padding states: all grid cells are equal */
   .hero-stat,
   .hero-stat:first-child {
     padding: 0.75rem 1rem;
@@ -758,13 +761,13 @@ code, .mono {
     border-right: 1px solid var(--border);
   }
  
-  /* Правий стовпець (2-й і 4-й) — прибрати правий border */
+  /* Right column (2nd and 4th stat): no right border */
   .hero-stats .hero-stat:nth-child(3),
   .hero-stats .hero-stat:nth-child(7) {
     border-right: none;
   }
  
-  /* Нижній рядок (3-й і 4-й stat, але в HTML це 5-й і 7-й child бо є dividers) */
+  /* Bottom row (3rd and 4th stat; in HTML they are the 5th and 7th child because of the dividers) */
   .hero-stats .hero-stat:nth-child(5),
   .hero-stats .hero-stat:nth-child(7) {
     border-bottom: none;
@@ -787,7 +790,7 @@ code, .mono {
     align-self: flex-start;
   }
  
-  /* CTA кнопки — стовпцем */
+  /* CTA buttons in a column */
   .hero-ctas {
     flex-direction: column;
   }
@@ -872,15 +875,29 @@ code, .mono {
   flex: 1;
 }
  
-.why-card-icon {
-  font-size: 1.5rem;
-  line-height: 1;
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: var(--accent-cyan);
+  background: rgba(0, 229, 200, 0.07);
+  border: 1px solid var(--border-accent);
+  flex-shrink: 0;
   margin-bottom: 0.25rem;
+}
+[data-theme="light"] .card-icon {
+  background: rgba(0, 180, 160, 0.08);
 }
  
 .why-card-meta {
   margin-top: auto;
   padding-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
  
 .why-card--featured {
@@ -900,7 +917,6 @@ code, .mono {
 }
  
 .why-card--featured h3 {
-  font-size: 1.2rem;
   font-family: var(--font-display);
 }
  
@@ -924,7 +940,6 @@ code, .mono {
 
 /* ============================================================
    SONDA SECTION
-   Замінити або додати в кінець global.css
    ============================================================ */
 
 .sonda-inner {
@@ -1037,356 +1052,6 @@ code, .mono {
   text-transform: uppercase;
 }
 
-/* ---- Preview card ---- */
-.sonda-preview {
-  position: sticky;
-  top: 88px;
-}
-
-.sonda-preview-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  font-family: var(--font-mono);
-}
-
-/* Window chrome */
-.sonda-preview-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary);
-}
-
-.sonda-preview-header-left {
-  display: flex;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-.sonda-preview-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.sonda-preview-dot--red    { background: #ff5f57; }
-.sonda-preview-dot--yellow { background: #febc2e; }
-.sonda-preview-dot--green  { background: #28c840; }
-
-.sonda-preview-title {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  flex: 1;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-
-/* Live indicator (зелена точка + LIVE текст у правому куті window chrome) */
-.sonda-preview-live {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  letter-spacing: 0.1em;
-  font-family: var(--font-mono);
-  flex-shrink: 0;
-}
-
-.sonda-preview-live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #28c840;
-  box-shadow: 0 0 8px rgba(40, 200, 64, 0.7);
-  animation: sonda-pulse 2s ease-in-out infinite;
-}
-
-@keyframes sonda-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.45; }
-}
-
-/* ---- Cluster summary ---- */
-.sonda-summary-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.sonda-summary-item {
-  background: var(--bg-card);
-  padding: 0.75rem 0.875rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-}
-
-.sonda-summary-value {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.sonda-summary-unit {
-  font-size: 0.75em;
-  color: var(--text-secondary);
-  margin-left: 0.05em;
-}
-
-.sonda-summary-label {
-  font-size: 0.58rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  line-height: 1.25;
-}
-
-/* ---- Infrastructure status block ---- */
-.sonda-infra-block {
-  padding: 0.875rem 1rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.sonda-block-label {
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.65rem;
-  font-family: var(--font-mono);
-}
-
-.sonda-infra-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.sonda-infra-tile {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  min-width: 0;
-}
-
-.sonda-infra-tile-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
-}
-
-.sonda-infra-tile-name {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-.sonda-infra-tile-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.sonda-infra-tile-dot--green { background: #28c840; box-shadow: 0 0 6px rgba(40, 200, 64, 0.6); }
-.sonda-infra-tile-dot--amber { background: #f0a830; box-shadow: 0 0 6px rgba(240, 168, 48, 0.6); }
-.sonda-infra-tile-dot--red   { background: #ff5f57; box-shadow: 0 0 6px rgba(255, 95, 87, 0.6); }
-
-.sonda-infra-tile-value {
-  display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
-  line-height: 1;
-}
-
-.sonda-infra-tile-num {
-  font-size: 1.05rem;
-  font-weight: 700;
-  font-family: var(--font-display);
-  color: var(--text-primary);
-}
-
-.sonda-infra-tile-suffix {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-
-.sonda-infra-tile-meta {
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-}
-
-/* ---- Insights block (DZ broadcast + BAM connected) ---- */
-.sonda-insights-block {
-  padding: 0.875rem 1rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.sonda-insights-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.sonda-insight-tile {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.7rem 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  position: relative;
-}
-
-.sonda-insight-tile--magenta {
-  border-left: 2px solid var(--accent-magenta);
-}
-
-.sonda-insight-tile--cyan {
-  border-left: 2px solid var(--accent-cyan);
-}
-
-.sonda-insight-cat {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-}
-
-.sonda-insight-tile--magenta .sonda-insight-cat { color: var(--accent-magenta); }
-.sonda-insight-tile--cyan    .sonda-insight-cat { color: var(--accent-cyan); }
-
-.sonda-insight-num {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--text-primary);
-}
-
-.sonda-insight-tile--magenta .sonda-insight-num { color: var(--accent-magenta); }
-.sonda-insight-tile--cyan    .sonda-insight-num { color: var(--accent-cyan); }
-
-.sonda-insight-desc {
-  font-size: 0.66rem;
-  color: var(--text-secondary);
-  line-height: 1.35;
-  font-family: var(--font-mono);
-}
-
-.sonda-insight-stake {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
-}
-
-/* ---- Coverage matrix (BAM x DZ adoption) ---- */
-.sonda-coverage-block {
-  padding: 0.875rem 1rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.sonda-coverage-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.sonda-coverage-cell {
-  background: var(--bg-secondary);
-  padding: 0.6rem 0.7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.sonda-coverage-cell--strong {
-  background: linear-gradient(
-    135deg,
-    rgba(224, 64, 170, 0.06) 0%,
-    rgba(0, 229, 200, 0.06) 100%
-  );
-}
-
-[data-theme="light"] .sonda-coverage-cell--strong {
-  background: linear-gradient(
-    135deg,
-    rgba(192, 48, 122, 0.08) 0%,
-    rgba(0, 180, 160, 0.08) 100%
-  );
-}
-
-.sonda-coverage-cell--muted {
-  opacity: 0.65;
-}
-
-.sonda-coverage-num {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--text-primary);
-}
-
-.sonda-coverage-cell--strong .sonda-coverage-num {
-  color: var(--accent-cyan);
-}
-
-.sonda-coverage-cat {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
-}
-
-/* ---- Note ---- */
-.sonda-preview-note {
-  padding: 0.75rem 1rem;
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  font-family: var(--font-mono);
-  opacity: 0.85;
-}
-
-.sonda-preview-note a {
-  color: var(--accent-cyan);
-  text-decoration: none;
-}
-
-.sonda-preview-note a:hover {
-  text-decoration: underline;
-}
-
-/* Live dot inside "Open sonda.network" button */
 .sonda-dot--live {
   background: #28c840;
   box-shadow: 0 0 6px rgba(40, 200, 64, 0.7);
@@ -1398,34 +1063,10 @@ code, .mono {
   .sonda-inner {
     grid-template-columns: 1fr;
   }
-  .sonda-preview {
+  .sonda-side {
     position: static;
   }
-  .sonda-ctas {
-    flex-direction: column;
-  }
-  .sonda-ctas .btn-primary,
-  .sonda-ctas .sonda-network-btn,
-  .sonda-ctas .btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
 }
-
-@media (max-width: 480px) {
-  .sonda-summary-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .sonda-summary-value {
-    font-size: 1.05rem;
-  }
-}
-
-
-
-
-
-
 
 
 /* ============================================================
@@ -1484,13 +1125,10 @@ code, .mono {
   flex-wrap: wrap;
 }
 
-.ecosystem-card-icon {
-  font-size: 1.6rem;
-  line-height: 1;
-  filter: drop-shadow(0 0 12px rgba(0, 229, 200, 0.25));
-}
-
 .ecosystem-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--font-mono);
   font-size: 0.65rem;
   text-transform: uppercase;
@@ -1499,25 +1137,40 @@ code, .mono {
   border-radius: 4px;
   border: 1px solid var(--border);
   background: var(--bg-secondary);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
-.ecosystem-tag--cyan {
-  color: var(--accent-cyan);
-  background: rgba(0, 229, 200, 0.08);
-  border-color: var(--border-accent);
+/* Alpenglow in the color SONDA uses for that cluster */
+.ecosystem-tag--alpenglow {
+  color: #fb7185;
+  background: rgba(251, 113, 133, 0.08);
+  border-color: rgba(251, 113, 133, 0.35);
+}
+[data-theme="light"] .ecosystem-tag--alpenglow {
+  color: #e11d48;
+  background: rgba(225, 29, 72, 0.06);
+  border-color: rgba(225, 29, 72, 0.3);
 }
 
-.ecosystem-tag--magenta {
-  color: var(--accent-magenta);
-  background: rgba(224, 64, 170, 0.08);
-  border-color: rgba(224, 64, 170, 0.25);
+/* Superteam Ukraine in Ukrainian colors */
+.ecosystem-tag--ua {
+  color: #ffd500;
+  background: rgba(0, 87, 183, 0.18);
+  border-color: rgba(0, 87, 183, 0.75);
 }
-
-[data-theme="light"] .ecosystem-tag--magenta {
-  background: rgba(192, 48, 122, 0.08);
-  border-color: rgba(192, 48, 122, 0.25);
+[data-theme="light"] .ecosystem-tag--ua {
+  color: #0057b7;
+  background: rgba(255, 213, 0, 0.16);
+  border-color: rgba(230, 190, 0, 0.9);
+}
+.ua-flag {
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  border-radius: 1.5px;
+  background: linear-gradient(to bottom, #0057b7 50%, #ffd500 50%);
+  flex-shrink: 0;
 }
 
 .ecosystem-card-title {
@@ -1625,8 +1278,14 @@ code, .mono {
 /* Responsive */
 @media (max-width: 980px) {
   .ecosystem-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1656,6 +1315,7 @@ code, .mono {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
@@ -1677,98 +1337,27 @@ code, .mono {
   font-family: var(--font-mono);
 }
 
-.staking-widget-wrap {
-  display: block;
-  width: 100%;
-  max-width: 472px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--bg-card);
-  margin-bottom: 1rem;
-}
-
-.staking-widget-wrap iframe {
-  display: block;
-  width: 100%;
-  height: 302px;
-  border: none;
-}
-
-@media (max-width: 520px) {
-  .staking-widget-wrap {
-    max-width: 100%;
-  }
-  .staking-widget-wrap iframe {
-    height: 470px;
-  }
-}
-
-.widget-hidden { display: none; }
-
-.staking-fallback-block {
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  margin-bottom: 1rem;
-}
-
-.staking-fallback-block p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
 /* ---- Manual staking instructions ---- */
 .staking-manual {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  overflow: hidden;
-  width: 100%;
-}
-
-.staking-manual-summary {
-  padding: 0.875rem 1.25rem;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.2s ease, background 0.2s ease;
   background: var(--bg-card);
-}
-.staking-manual-summary::-webkit-details-marker { display: none; }
-.staking-manual-summary::before {
-  content: '›';
-  font-size: 1.1rem;
-  color: var(--accent-cyan);
-  transition: transform 0.2s ease;
-  display: inline-block;
-  line-height: 1;
-}
-details[open] .staking-manual-summary::before { transform: rotate(90deg); }
-.staking-manual-summary:hover {
-  color: var(--text-primary);
-  background: var(--bg-card-hover);
-}
-
-.staking-manual-content {
-  padding: 1.25rem;
-  border-top: 1px solid var(--border);
-  background: var(--bg-card);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 .staking-manual-intro {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.staking-wallets {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
 }
 
 .staking-manual-wallet-block {
@@ -1778,13 +1367,17 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
 }
 
 .staking-manual-wallet-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-display);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
 }
+.staking-manual-wallet-name .icon { color: var(--accent-cyan); }
 .staking-manual-wallet-name a { color: var(--text-primary); text-decoration: none; }
 .staking-manual-wallet-name a:hover { color: var(--accent-cyan); opacity: 1; }
 
@@ -1836,7 +1429,7 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
-  padding-top: 0.875rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
 
@@ -1858,6 +1451,11 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
   word-break: break-all;
+}
+
+@media (max-width: 760px) {
+  .staking-wallets { grid-template-columns: 1fr; }
+  .staking-manual { padding: 1.25rem; }
 }
 
 /* ---- Liquid staking ---- */
@@ -1940,13 +1538,8 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
 }
 
 /* ---- Dashboards ----
-   Логіка breakpoints:
-   ≥ 860px  → 6 колонок (всі в 1 рядок при 6 картках)
-   500–860px → 3 колонки (рівні рядки по 3)
-   < 500px  → 2 колонки (рядки по 2)
-   
-   При непарній кількості на мобільному — остання картка
-   розтягується на всю ширину (займає "перше місце" в рядку).
+   Breakpoints: 6 columns from 860px (one row of six), 3 columns from 500px,
+   2 columns below. On mobile an odd last card spans the full width.
 */
 .staking-dashboards-grid {
   display: grid;
@@ -1976,7 +1569,7 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   color: var(--text-primary);
 }
 
-/* Виправлений контраст — text-secondary замість text-muted */
+/* Better contrast: text-secondary instead of text-muted */
 .staking-dashboard-desc {
   font-size: 0.72rem;
   color: var(--text-secondary);
@@ -1986,14 +1579,14 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
 
 /* ---- Responsive ---- */
 
-/* Планшет: 3 колонки — рівні рядки по 3 */
+/* Tablet: 3 columns, even rows of 3 */
 @media (max-width: 860px) {
   .staking-dashboards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Мобільний: 2 колонки */
+/* Mobile: 2 columns */
 @media (max-width: 500px) {
   .staking-liquid-grid {
     grid-template-columns: 1fr;
@@ -2003,7 +1596,7 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Непарна остання картка — на всю ширину */
+  /* An odd last card spans the full width */
   .staking-dashboard-link:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
@@ -2031,7 +1624,7 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   gap: 1.25rem;
 }
 
-/* ---- Top row: лого + nav + соцмережі в один рядок на десктопі ---- */
+/* ---- Top row: logo, nav and socials in one row on desktop ---- */
 .footer-top {
   display: flex;
   align-items: center;
@@ -2061,12 +1654,12 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   color: var(--text-primary);
 }
 
-/* Nav — між лого і соцмережами на десктопі */
+/* Nav between the logo and the socials on desktop */
 .footer-nav {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  /* Компенсуємо внутрішній padding посилань щоб вирівняти з лого */
+  /* Offset the inner padding of the links to line up with the logo */
   margin-left: -0.65rem;
   flex: 1;
 }
@@ -2181,8 +1774,8 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
   white-space: nowrap;
 }
 
-.footer-vote-addr.hidden  { opacity: 0; }
-.footer-vote-copied.visible { opacity: 1; }
+.footer-vote-btn.is-copied .footer-vote-addr { opacity: 0; }
+.footer-vote-btn.is-copied .footer-vote-copied { opacity: 1; }
 
 .footer-copy {
   font-size: 0.78rem;
@@ -2240,3 +1833,566 @@ details[open] .staking-manual-summary::before { transform: rotate(90deg); }
     font-size: 0.62rem;
   }
 }
+/* ============================================================
+   HEADER: mobile menu button
+   ============================================================ */
+.mobile-nav-cta {
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   SONDA: side column and "Solya on SONDA" card
+   Visual language follows the validators table on sonda.network.
+   ============================================================ */
+.sonda-side {
+  position: sticky;
+  top: 88px;
+}
+
+.sonda-x-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sonda-ctas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 460px;
+}
+.sonda-ctas > a {
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+.sonda-content,
+.sonda-side { min-width: 0; }
+@media (max-width: 480px) {
+  .sonda-ctas { grid-template-columns: 1fr; max-width: none; }
+}
+
+.sv-card {
+  --sv-accent: #3b82f6; /* sonda.network mainnet accent */
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+}
+[data-theme="light"] .sv-card {
+  --sv-accent: #2563eb;
+  box-shadow: 0 12px 32px rgba(20, 20, 50, 0.08);
+}
+
+.sv-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+.sv-mark { width: 20px; height: 20px; border-radius: 5px; }
+.sv-brand { font-weight: 600; letter-spacing: 0.08em; color: var(--text-primary); }
+.sv-cluster { color: var(--sv-accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.62rem; }
+.sv-status {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-size: 0.64rem;
+}
+.sv-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
+.sv-status.is-live { color: var(--text-secondary); }
+.sv-status.is-live i {
+  background: #28c840;
+  box-shadow: 0 0 6px rgba(40, 200, 64, 0.6);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+.sv-body {
+  padding: 1rem 1.1rem 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.sv-id { display: flex; gap: 0.85rem; align-items: center; }
+.sv-logo { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.sv-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+.sv-keys { display: flex; flex-direction: column; gap: 0.05rem; margin-top: 0.3rem; }
+.sv-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+.sv-key-l { color: var(--text-muted); width: 1.9em; }
+.sv-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.sv-copy:hover,
+.sv-copy.is-copied { color: var(--accent-cyan); background: var(--bg-card-hover); }
+
+.sv-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Facts: version, stake, location side by side */
+.sv-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.sv-fact { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.sv-val {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.sv-val small { font-size: 0.62rem; color: var(--text-muted); font-weight: 500; }
+.sv-sub { font-size: 0.72rem; }
+.sv-cli { font-weight: 600; color: #a78bfa; }
+[data-theme="light"] .sv-cli { color: #7c3aed; }
+
+.sv-meter { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
+.sv-meter i { width: 4px; background: color-mix(in srgb, var(--text-muted) 30%, transparent); border-radius: 1px; }
+.sv-meter i:nth-child(1) { height: 4px; }
+.sv-meter i:nth-child(2) { height: 7px; }
+.sv-meter i:nth-child(3) { height: 9px; }
+.sv-meter i:nth-child(4) { height: 12px; }
+.sv-meter.t1 i.on { background: var(--text-muted); }
+.sv-meter.t2 i.on { background: color-mix(in srgb, var(--sv-accent) 55%, var(--text-muted)); }
+.sv-meter.t3 i.on { background: color-mix(in srgb, var(--sv-accent) 85%, white); }
+.sv-meter.t4 i.on { background: var(--sv-accent); }
+
+.sv-badges { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.sv-badge {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.12rem 0.42rem;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+  text-transform: uppercase;
+  cursor: default;
+}
+.sv-badge-comm { color: var(--text-secondary); border-color: var(--border); background: var(--bg-primary); }
+.sv-badge-dz { color: #a78bfa; border-color: rgba(167, 139, 250, 0.45); background: rgba(167, 139, 250, 0.1); }
+.sv-badge-mc { color: #d8b4fe; border-color: rgba(216, 180, 254, 0.4); background: rgba(216, 180, 254, 0.08); }
+.sv-badge-bam { color: #22d3ee; border-color: rgba(34, 211, 238, 0.45); background: rgba(34, 211, 238, 0.08); }
+.sv-badge-sfdp { color: var(--sv-accent); border-color: rgba(59, 130, 246, 0.45); background: rgba(59, 130, 246, 0.1); }
+.sv-badge-del { color: #ef4444; border-color: rgba(239, 68, 68, 0.45); background: rgba(239, 68, 68, 0.1); }
+[data-theme="light"] .sv-badge-dz { color: #7c3aed; }
+[data-theme="light"] .sv-badge-mc { color: #9333ea; }
+[data-theme="light"] .sv-badge-bam { color: #0891b2; }
+
+.sv-city { font-family: var(--font-body); font-weight: 500; font-size: 0.9rem; }
+.sv-city span { overflow: hidden; text-overflow: ellipsis; }
+.sv-pin { flex-shrink: 0; overflow: visible; }
+.sv-pin-bg { fill: var(--bg-card-hover); }
+.sv-pin-ring { fill: none; stroke: var(--border); stroke-width: 1; }
+.sv-pin-none { width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; }
+.sv-prov {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.sv-prov-logo {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sv-prov-logo::before { content: attr(data-initial); font-size: 0.5rem; color: var(--text-muted); }
+.sv-prov-logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #fff; }
+.sv-asn { color: var(--text-muted); font-size: 0.62rem; letter-spacing: 0.03em; }
+
+/* Rows: label on the left, badges on the right */
+.sv-rows {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 0.6rem 0.75rem;
+}
+
+.sv-perf {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  white-space: nowrap;
+  cursor: default;
+}
+.sv-perf b { font-weight: 600; color: var(--text-primary); }
+.sv-perf i { font-style: normal; font-size: 0.56rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.sv-perf-rank { border-color: color-mix(in srgb, var(--sv-accent) 45%, transparent); background: color-mix(in srgb, var(--sv-accent) 10%, transparent); }
+.sv-perf-rank b { color: var(--sv-accent); }
+
+.sv-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.8rem 1.1rem 1.1rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--sv-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--sv-accent) 10%, transparent);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.sv-open:hover {
+  background: color-mix(in srgb, var(--sv-accent) 18%, transparent);
+  border-color: var(--sv-accent);
+  opacity: 1;
+}
+
+@media (max-width: 460px) {
+  .sv-facts { grid-template-columns: auto 1fr; }
+  .sv-fact-loc { grid-column: 1 / -1; }
+  .sv-rows { grid-template-columns: 1fr; gap: 0.3rem; }
+  .sv-rows .sv-badges { margin-bottom: 0.35rem; }
+  .sv-head { flex-wrap: wrap; }
+  .sv-status { margin-left: 0; width: 100%; }
+}
+
+/* ---- Explore SONDA ---- */
+.sonda-explore {
+  margin-top: 3.5rem;
+}
+.sonda-explore-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.explore-rows { display: flex; flex-direction: column; gap: 0.75rem; }
+.explore-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+.explore-row-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.explore-row-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.explore-link {
+  --tc: #a78bfa;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  min-width: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.explore-link:hover {
+  border-color: color-mix(in srgb, var(--tc) 55%, transparent);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+.explore-link.g-testnet { --tc: #e879f9; }
+.explore-link.g-devnet { --tc: #fbbf24; }
+.explore-link.g-alpenglow { --tc: #fb7185; }
+.explore-link.g-sonda { --tc: #3b82f6; }
+.explore-link.g-telegram { --tc: #a78bfa; }
+.explore-link.g-code { --tc: var(--text-secondary); }
+.explore-link.g-solya { --tc: var(--accent-cyan); }
+[data-theme="light"] .explore-link { --tc: #7c3aed; }
+[data-theme="light"] .explore-link.g-testnet { --tc: #c026d3; }
+[data-theme="light"] .explore-link.g-devnet { --tc: #d97706; }
+[data-theme="light"] .explore-link.g-alpenglow { --tc: #e11d48; }
+[data-theme="light"] .explore-link.g-sonda { --tc: #2563eb; }
+[data-theme="light"] .explore-link.g-telegram { --tc: #7c3aed; }
+[data-theme="light"] .explore-link.g-code { --tc: var(--text-secondary); }
+[data-theme="light"] .explore-link.g-solya { --tc: var(--accent-cyan); }
+
+.explore-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--tc);
+  background: color-mix(in srgb, var(--tc) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tc) 32%, transparent);
+  overflow: hidden;
+}
+.explore-icon img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--bg-card);
+}
+.explore-link.g-solya .explore-icon { border-radius: 50%; }
+.explore-icon:has(img) .icon { display: none; }
+.explore-text { display: flex; flex-direction: column; gap: 0.12rem; min-width: 0; }
+.explore-title { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
+.explore-desc { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35; }
+.explore-arrow { margin-left: auto; color: var(--text-muted); flex-shrink: 0; transition: color 0.2s ease, transform 0.2s ease; }
+.explore-link:hover .explore-arrow { color: var(--tc); transform: translate(2px, -2px); }
+
+@media (max-width: 1080px) {
+  .explore-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .explore-desc { display: none; }
+}
+/* Phones: three compact tiles per row, icon above the title */
+@media (max-width: 640px) {
+  .explore-rows { gap: 0.9rem; }
+  .explore-row-grid { gap: 0.5rem; }
+  .explore-link {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    padding: 0.75rem 0.4rem 0.7rem;
+    text-align: center;
+  }
+  .explore-icon { width: 36px; height: 36px; }
+  .explore-title { font-size: 0.74rem; line-height: 1.2; }
+  .explore-arrow { display: none; }
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline-section {
+  border-top: 1px solid var(--border);
+}
+
+.tl-legend {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+.tl-key { display: inline-flex; align-items: center; gap: 0.4rem; }
+.tl-key i { width: 8px; height: 8px; border-radius: 50%; background: var(--tl-color); }
+.tl-validator { --tl-color: var(--accent-cyan); }
+.tl-sonda { --tl-color: #a78bfa; }
+.tl-ecosystem { --tl-color: var(--accent-magenta); }
+
+.tl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 860px;
+}
+.tl-year {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.5rem;
+}
+.tl-year-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  align-self: start;
+  line-height: 1.2;
+}
+.tl-items {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0 1.75rem 1.6rem;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.tl-year:last-child .tl-items { padding-bottom: 0.35rem; }
+.tl-item { position: relative; }
+.tl-dot {
+  position: absolute;
+  left: calc(-1.6rem - 5px);
+  top: 0.3rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tl-color);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.tl-item.is-now .tl-dot {
+  animation: pulse-dot 2.5s ease-in-out infinite;
+  box-shadow: 0 0 0 4px var(--bg-primary), 0 0 12px var(--tl-color);
+}
+.tl-meta { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; }
+.tl-month {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tl-color);
+}
+.tl-now {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bg-primary);
+  background: var(--tl-color);
+  padding: 0.05rem 0.4rem;
+  border-radius: 3px;
+}
+.tl-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin: 0 0 0.2rem; }
+.tl-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+@media (max-width: 640px) {
+  .tl-year { grid-template-columns: 1fr; gap: 0.6rem; }
+  .tl-year-label { font-size: 1.2rem; }
+  .tl-items { padding-left: 1.3rem; }
+  .tl-dot { left: calc(-1.3rem - 5px); }
+}
+
+/* ============================================================
+   STAKING: SONDA entry in the dashboards grid
+   ============================================================ */
+.staking-dashboard-link.is-sonda .staking-dashboard-name { color: #a78bfa; }
+[data-theme="light"] .staking-dashboard-link.is-sonda .staking-dashboard-name { color: #7c3aed; }
+
+/* ============================================================
+   TOOLTIPS: instant, one floating element (see BaseLayout)
+   ============================================================ */
+.tip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  max-width: 280px;
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 0.08s ease, transform 0.08s ease;
+  white-space: pre-line;
+}
+.tip.is-on { opacity: 1; transform: none; }
+[data-tip] { cursor: help; }
+button[data-tip], a[data-tip] { cursor: pointer; }
+
+/* ============================================================
+   FAVICONS next to wallets, liquid staking and dashboards
+   (self-hosted in public/favicons; a missing file shows the icon)
+   ============================================================ */
+.fav {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  overflow: hidden;
+}
+.fav img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.fav:has(img) .icon { display: none; }
+.staking-liquid-name,
+.staking-dashboard-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* ============================================================
+   ECOSYSTEM: compact Alpenglow keys
+   ============================================================ */
+.ecosystem-keys--compact .ecosystem-key-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ecosystem-keys--compact .ecosystem-key-value { word-break: normal; white-space: nowrap; }
+.ecosystem-card-note a { color: var(--accent-cyan); }
+
+/* Dashboards: centered entries for a symmetric row */
+.staking-dashboard-link {
+  align-items: center;
+  text-align: center;
+}
+.staking-dashboard-name { justify-content: center; }

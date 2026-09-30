@@ -1,28 +1,32 @@
 ---
 // src/components/Header.astro
+const nav = [
+  { label: 'Why Solya', href: '/#why-solya' },
+  { label: 'SONDA', href: '/#sonda' },
+  { label: 'Ecosystem', href: '/#ecosystem' },
+  { label: 'Timeline', href: '/#timeline' },
+  { label: 'Stake', href: '/#stake' },
+  { label: 'Security', href: '/security/' },
+];
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
 
     <a href="/" class="logo" aria-label="Solya Validator: home">
-      <img src="/logo.jpg" alt="Solya" class="logo-img" />
+      <img src="/logo.jpg" alt="Solya" class="logo-img" width="32" height="32" />
       <span class="logo-text">Solya</span>
     </a>
 
     <nav class="nav" aria-label="Main navigation">
-      <a href="/#why-solya" class="nav-link">Why Solya</a>
-      <a href="/#sonda" class="nav-link">SONDA</a>
-      <a href="/#ecosystem" class="nav-link">Ecosystem</a>
-      <a href="/#stake" class="nav-link">Stake</a>
-      <a href="/security" class="nav-link">Security</a>
+      {nav.map((item) => <a href={item.href} class="nav-link">{item.label}</a>)}
     </nav>
 
     <div class="header-actions">
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
         🌙
       </button>
-      <a href="/#stake" class="btn-primary btn-sm">Stake SOL</a>
+      <a href="/#stake" class="btn-primary btn-sm" data-track="Stake CTA" data-track-place="header">Stake SOL</a>
     </div>
 
     <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
@@ -31,12 +35,8 @@
   </div>
 
   <div class="mobile-nav" id="mobile-nav">
-    <a href="/#why-solya" class="mobile-nav-link">Why Solya</a>
-    <a href="/#sonda" class="mobile-nav-link">SONDA</a>
-    <a href="/#ecosystem" class="mobile-nav-link">Ecosystem</a>
-    <a href="/#stake" class="mobile-nav-link">Stake</a>
-    <a href="/security" class="mobile-nav-link">Security</a>
-    <a href="/#stake" class="btn-primary" style="margin-top:0.5rem">Stake SOL</a>
+    {nav.map((item) => <a href={item.href} class="mobile-nav-link">{item.label}</a>)}
+    <a href="/#stake" class="btn-primary mobile-nav-cta" data-track="Stake CTA" data-track-place="mobile-nav">Stake SOL</a>
   </div>
 </header>
 
@@ -56,14 +56,14 @@
   toggle?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    try { localStorage.setItem('theme', next); } catch { /* private mode */ }
     updateIcon();
   });
 
   menuBtn?.addEventListener('click', () => mobileNav?.classList.toggle('open'));
 
-  document.querySelectorAll('.mobile-nav-link').forEach(l =>
-    l.addEventListener('click', () => mobileNav?.classList.remove('open'))
+  mobileNav?.querySelectorAll('a').forEach((l) =>
+    l.addEventListener('click', () => mobileNav.classList.remove('open'))
   );
 
   window.addEventListener('scroll', () => {

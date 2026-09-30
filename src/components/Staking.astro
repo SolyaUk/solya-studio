@@ -1,0 +1,154 @@
+---
+// src/components/Staking.astro
+// The old staking.kiwi widget is gone (it stopped working). Native staking is
+// explained step by step until the new widget is ready.
+import Icon from './Icon.astro';
+import { VOTE, DASHBOARDS, WALLET_ICONS } from '../data/solya.js';
+---
+
+<section class="section staking-section" id="stake">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">Stake with Solya</span>
+      <h2 class="section-title">Start earning with 0% commission</h2>
+      <p class="section-desc">
+        Stake natively from your wallet in a few steps, or choose liquid staking
+        through BlazeStake or JPool and get a token you can use in DeFi while
+        your SOL keeps earning.
+      </p>
+    </div>
+
+    <!-- Native staking. The new staking widget will go above this block. -->
+    <div class="staking-native fade-in">
+      <div class="staking-native-label">
+        <span class="staking-native-tag">Native staking</span>
+        <span class="staking-native-hint">Your stake account stays under your control</span>
+      </div>
+
+      <div class="staking-manual">
+        <p class="staking-manual-intro">
+          You can stake to Solya from any Solana wallet. Here is how it works in
+          Phantom and Solflare.
+        </p>
+
+        <div class="staking-wallets">
+          <div class="staking-manual-wallet-block">
+            <div class="staking-manual-wallet-name">
+              <span class="fav"><Icon name="wallet" size={14} /><img src={WALLET_ICONS.phantom} alt="" width="18" height="18" loading="lazy" onerror="this.remove()" /></span>
+              <a href="https://phantom.app" target="_blank" rel="noopener noreferrer">Phantom</a>
+            </div>
+            <div class="staking-manual-steps">
+              <div class="staking-manual-step">
+                <span class="staking-step-num">1</span>
+                <div>
+                  <strong>Open your SOL balance</strong>
+                  <p>Tap SOL in your asset list to open the token screen.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">2</span>
+                <div>
+                  <strong>Choose Native Staking</strong>
+                  <p>Tap <code>... More</code>, then <code>Stake SOL</code>, then <code>Native Staking</code>. It sits a few taps deeper than liquid staking.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">3</span>
+                <div>
+                  <strong>Search for Solya</strong>
+                  <p>Type <code>Solya</code> in the validator search, or paste the vote account below.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">4</span>
+                <div>
+                  <strong>Enter the amount and confirm</strong>
+                  <p>Phantom shows the estimated APY for Solya. Enter the amount and confirm the transaction.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="staking-manual-wallet-block">
+            <div class="staking-manual-wallet-name">
+              <span class="fav"><Icon name="wallet" size={14} /><img src={WALLET_ICONS.solflare} alt="" width="18" height="18" loading="lazy" onerror="this.remove()" /></span>
+              <a href="https://solflare.com" target="_blank" rel="noopener noreferrer">Solflare</a>
+            </div>
+            <div class="staking-manual-steps">
+              <div class="staking-manual-step">
+                <span class="staking-step-num">1</span>
+                <div>
+                  <strong>Open the Staking tab</strong>
+                  <p>In Solflare, go to the Staking section from the main navigation.</p>
+                </div>
+              </div>
+              <div class="staking-manual-step">
+                <span class="staking-step-num">2</span>
+                <div>
+                  <strong>Search for Solya and stake</strong>
+                  <p>Type <code>Solya</code> or paste the vote account, enter the amount and confirm.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="staking-manual-address">
+          <span class="staking-manual-address-label">Vote account</span>
+          <code class="staking-manual-address-value">{VOTE}</code>
+          <button
+            class="hero-copy-btn"
+            type="button"
+            data-copy={VOTE}
+            data-copy-what="vote account"
+            data-track-place="stake"
+            aria-label="Copy vote account"
+          >
+            <Icon name="copy" size={13} class="copy-icon-idle" />
+            <Icon name="check" size={13} class="copy-icon-done" />
+            <span data-copy-label>Copy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liquid staking -->
+    <div class="staking-liquid fade-in">
+      <div class="staking-liquid-label">Liquid staking</div>
+      <div class="staking-liquid-grid">
+        <a href={`https://stake.solblaze.org/app/?validator=${VOTE}`} target="_blank" rel="noopener noreferrer" class="staking-liquid-card">
+          <div class="staking-liquid-card-top">
+            <span class="staking-liquid-name"><span class="fav"><Icon name="wallet" size={14} /><img src={WALLET_ICONS.blazestake} alt="" width="18" height="18" loading="lazy" onerror="this.remove()" /></span>BlazeStake</span>
+            <span class="staking-liquid-token">bSOL</span>
+          </div>
+          <p class="staking-liquid-desc">Stake through BlazeStake and receive bSOL, a liquid token you can use across Solana DeFi.</p>
+        </a>
+        <a href={`https://app.jpool.one/direct-staking?vote=${VOTE}`} target="_blank" rel="noopener noreferrer" class="staking-liquid-card">
+          <div class="staking-liquid-card-top">
+            <span class="staking-liquid-name"><span class="fav"><Icon name="wallet" size={14} /><img src={WALLET_ICONS.jpool} alt="" width="18" height="18" loading="lazy" onerror="this.remove()" /></span>JPool</span>
+            <span class="staking-liquid-token">jSOL</span>
+          </div>
+          <p class="staking-liquid-desc">Direct staking through JPool: your stake goes to Solya and you receive jSOL for DeFi.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dashboards -->
+    <div class="staking-dashboards fade-in">
+      <div class="staking-dashboards-label">Solya on validator dashboards</div>
+      <div class="staking-dashboards-grid">
+        {DASHBOARDS.map((d) => (
+          <a href={d.url} target="_blank" rel="noopener noreferrer" class={`staking-dashboard-link${d.label === 'SONDA' ? ' is-sonda' : ''}`}>
+            <span class="staking-dashboard-name">
+              <span class="fav"><Icon name="activity" size={14} /><img src={d.icon} alt="" width="18" height="18" loading="lazy" onerror="this.remove()" /></span>
+              {d.label}
+            </span>
+            <span class="staking-dashboard-desc">{d.desc}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>

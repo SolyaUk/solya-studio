@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sonda:snapshot": "node scripts/sonda-snapshot.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

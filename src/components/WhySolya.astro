@@ -1,5 +1,37 @@
 ---
 // src/components/WhySolya.astro
+// Six cards of similar weight: icon, title, about 30 to 40 words, one badge.
+import Icon from './Icon.astro';
+import { getSondaView } from '../lib/sonda-build.js';
+import { CURRENT_LOCATION, SFDP } from '../data/solya.js';
+
+const sonda = await getSondaView();
+const storyMatches = sonda.cc === CURRENT_LOCATION.countryCode;
+
+const provider = sonda.providerValidators
+  ? `${sonda.provider}, an established provider whose ${sonda.providerValidators} mainnet validators perform well`
+  : `${sonda.provider}, an established provider`;
+const stake = sonda.countryStakePct != null
+  ? `the city holds ${sonda.countryStakePct.toFixed(2)}% of Solana's stake, and Jito BAM and DoubleZero have nodes there`
+  : 'stake concentration is low, and Jito BAM and DoubleZero have nodes there';
+
+const locationText = storyMatches
+  ? `Hosted in ${CURRENT_LOCATION.place} since ${CURRENT_LOCATION.from} with ${provider}. We chose it with SONDA: ${stake}.`
+  : `Hosted in ${sonda.place} with ${sonda.provider}${sonda.asn ? ` (${sonda.asn})` : ''}. Location and provider data on this page come from SONDA.`;
+
+const stakeTip = sonda.countryStakePct != null
+  ? `${sonda.countryStakePct.toFixed(2)}% of mainnet stake is in ${sonda.place} (SONDA)`
+  : 'From SONDA';
+
+const bamRegion = (sonda.bam?.region || '').toUpperCase();
+const bamText = sonda.bam?.node
+  ? `Solya Validator runs Jito's BAM client, which moves transaction scheduling into trusted execution environments, with a BAM node in ${sonda.place}. The ordering can be checked, and front-running or sandwich attacks become much harder.`
+  : "Solya Validator runs Jito's BAM client, which moves transaction scheduling into trusted execution environments. The ordering can be checked, and front-running or sandwich attacks become much harder.";
+
+const dzText = sonda.dz?.multicast
+  ? 'Solya Validator is connected to DoubleZero, a dedicated network for Solana validators, and publishes its shreds through DoubleZero multicast. One transmission reaches every subscriber at once, which takes load off the rest of the network.'
+  : 'Solya Validator is connected to DoubleZero, a dedicated network for Solana validators, built for faster and more predictable delivery of blocks between validators across the network.';
+const dzBadge = sonda.dz?.device ? `${sonda.dz.device}${sonda.dz.multicast ? ' · multicast' : ''}` : 'DoubleZero';
 ---
 
 <section class="section why-solya" id="why-solya">
@@ -7,89 +39,72 @@
 
     <div class="section-header fade-in">
       <span class="section-label">Why stake with Solya</span>
-      <h2 class="section-title">Independent. Transparent.<br />Running since 2021</h2>
+      <h2 class="section-title">An independent validator,<br />run in the open since 2021</h2>
       <p class="section-desc">
-        Not a node-as-a-service. Not a datacenter rack with dozens of validators.
-        One node, one operator, full attention.
+        Solya Validator is a single mainnet validator looked after by one operator. Keys,
+        infrastructure, location history and the code of our tools are public.
       </p>
     </div>
 
     <div class="why-grid">
 
       <div class="why-card why-card--featured fade-in">
-        <div class="why-card-icon">◎</div>
-        <h3>0% Commission. Always</h3>
+        <div class="card-icon"><Icon name="percent" size={22} /></div>
+        <h3>0% commission on rewards and MEV</h3>
         <p>
-          Stakers receive 100% of inflation rewards and MEV.
-          That's been the policy for nearly two years, and it's not going to change.
-          When you stake with Solya, every reward the validator earns from inflation and Jito tips goes to you.
+          Stakers receive all inflation rewards and all Jito MEV tips. The
+          validator covers its own costs from the fees in the blocks it
+          produces, so everything your stake earns goes to you.
         </p>
+        <div class="why-card-meta"><span class="badge badge-cyan">100% of rewards to stakers</span></div>
+      </div>
+
+      <div class="why-card fade-in">
+        <div class="card-icon"><Icon name="globe" size={22} /></div>
+        <h3>{sonda.place}{sonda.region ? `, ${sonda.region}` : ''}</h3>
+        <p>{locationText}</p>
         <div class="why-card-meta">
-          <span class="badge badge-cyan">100% of rewards to stakers</span>
+          <span class="badge badge-cyan" data-tip={stakeTip}>{sonda.provider}{sonda.asn ? ` · ${sonda.asn}` : ''}</span>
         </div>
       </div>
 
       <div class="why-card fade-in">
-        <div class="why-card-icon">🌎</div>
-        <h3>Singapore, Asia-Pacific</h3>
+        <div class="card-icon"><Icon name="network" size={22} /></div>
+        <h3>DoubleZero connected</h3>
+        <p>{dzText}</p>
+        <div class="why-card-meta"><span class="badge badge-cyan" data-tip="DoubleZero device, from SONDA">{dzBadge}</span></div>
+      </div>
+
+      <div class="why-card fade-in">
+        <div class="card-icon"><Icon name="shield" size={22} /></div>
+        <h3>SFDP approved</h3>
         <p>
-          Hosted in Singapore since May 2026, on the same Vultr/Edgevana
-          provider as before. Solya operated from São Paulo, Brazil from
-          June 2025 to May 2026; that location was chosen for Latin
-          America's underrepresentation in Solana. The move to Singapore
-          happened when Jito's BAM rollout did not reach São Paulo within
-          the timeline. Both moves kept Solya outside the US/Europe
-          concentration.
+          Part of the Solana Foundation Delegation Program since {SFDP.since}.
+          The program checks uptime, performance, commission and the absence
+          of harmful practices such as sandwiching, over repeated rounds of
+          review.
         </p>
+        <div class="why-card-meta"><span class="badge badge-cyan">Approved since 2021</span></div>
+      </div>
+
+      <div class="why-card fade-in">
+        <div class="card-icon"><Icon name="cpu" size={22} /></div>
+        <h3>Jito BAM client</h3>
+        <p>{bamText}</p>
         <div class="why-card-meta">
-          <span class="badge badge-cyan">AS20473 · Vultr/Edgevana</span>
+          <span class="badge badge-cyan" data-tip={sonda.bam?.node ? `Jito BAM node ${sonda.bam.node}, from SONDA` : 'Jito BAM'}>{bamRegion ? `BAM · ${bamRegion}` : 'Jito BAM'}</span>
         </div>
       </div>
 
       <div class="why-card fade-in">
-        <div class="why-card-icon">⚡</div>
-        <h3>DoubleZero Connected</h3>
+        <div class="card-icon"><Icon name="user" size={22} /></div>
+        <h3>One operator since 2021</h3>
         <p>
-          Connected to DoubleZero's network and active in multicast: one
-          transmission reaches all subscribers simultaneously, reducing
-          bandwidth pressure across the cluster. Every connected validator
-          makes Solana's network layer faster and more resilient.
+          Run from Ukraine by one person: a single mainnet validator, plus
+          testnet and Alpenglow nodes for testing new releases. The same
+          operator builds SONDA and our other open-source tools.
         </p>
-        <div class="why-card-meta">
-          <span class="badge badge-cyan">sin001-dz002</span>
-        </div>
-      </div>
-
-      <div class="why-card fade-in">
-        <div class="why-card-icon">🛡️</div>
-        <h3>SFDP Approved</h3>
-        <p>
-          Part of the Solana Foundation Delegation Program since 2021. An
-          optional program that evaluates uptime, performance, network
-          contribution, and the absence of harmful practices like sandwiching
-          or excessive commission, across multiple rounds of review.
-        </p>
-      </div>
-
-      <div class="why-card fade-in">
-        <div class="why-card-icon">🔧</div>
-        <h3>Jito BAM Client</h3>
-        <p>
-          Running the BAM client, which moves transaction scheduling into
-          secure, tamper-proof hardware. Transactions execute in strict order,
-          making front-running and sandwich attacks structurally harder.
-          Better for users, better for the network.
-        </p>
-      </div>
-
-      <div class="why-card fade-in">
-        <div class="why-card-icon">👩‍💻</div>
-        <h3>One person, since 2021</h3>
-        <p>
-          Operated from Ukraine, independently. One node, full focus, and a
-          growing set of open-source tools for the ecosystem, including SONDA,
-          a network decentralization analytics project.
-        </p>
+        <div class="why-card-meta"><span class="badge badge-cyan">Mainnet · testnet · Alpenglow</span></div>
       </div>
 
     </div>

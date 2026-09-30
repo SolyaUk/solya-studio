@@ -1,0 +1,61 @@
+---
+// src/components/Timeline.astro
+import { getSondaView } from '../lib/sonda-build.js';
+import { TIMELINE } from '../data/solya.js';
+
+const sonda = await getSondaView();
+
+// Entries marked live get their numbers from SONDA; without data they are skipped.
+const entries = TIMELINE
+  .filter((e) => e.show !== false)
+  .filter((e) => !e.live || (sonda.age?.epochs != null && sonda.age?.firstEpoch != null))
+  .map((e) => ({
+    ...e,
+    text: e.live
+      ? e.text.replace('{ageEpochs}', String(sonda.age.epochs)).replace('{firstEpoch}', String(sonda.age.firstEpoch))
+      : e.text,
+  }));
+
+const years = [...new Set(entries.map((e) => e.year))];
+const kinds = { validator: 'Validator', sonda: 'SONDA', ecosystem: 'Ecosystem' };
+---
+
+<section class="section timeline-section" id="timeline">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">Timeline</span>
+      <h2 class="section-title">How Solya got here</h2>
+      <p class="section-desc">
+        The milestones that shaped the validator and SONDA, oldest first.
+      </p>
+      <div class="tl-legend">
+        {Object.entries(kinds).map(([k, label]) => (
+          <span class={`tl-key tl-${k}`}><i></i>{label}</span>
+        ))}
+      </div>
+    </div>
+
+    <ol class="tl fade-in">
+      {years.map((year) => (
+        <li class="tl-year">
+          <div class="tl-year-label">{year}</div>
+          <ol class="tl-items">
+            {entries.filter((e) => e.year === year).map((e) => (
+              <li class={`tl-item tl-${e.kind}${e.now ? ' is-now' : ''}`}>
+                <span class="tl-dot" aria-hidden="true"></span>
+                <div class="tl-meta">
+                  {e.month && <span class="tl-month">{e.month}</span>}
+                  {e.now && <span class="tl-now">Now</span>}
+                </div>
+                <h3 class="tl-title">{e.title}</h3>
+                <p class="tl-text">{e.text}</p>
+              </li>
+            ))}
+          </ol>
+        </li>
+      ))}
+    </ol>
+
+  </div>
+</section>

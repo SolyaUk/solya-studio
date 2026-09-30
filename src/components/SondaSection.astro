@@ -1,267 +1,171 @@
 ---
 // src/components/SondaSection.astro
-//
-// Snapshot values reflect a real moment of sonda.network mainnet-beta data.
-// Update when meaningfully stale. Current snapshot: epoch 976, 2026-05-25.
-// To automate later: fetch network_summary.json from data.sonda.network at
-// build time.
+import Icon from './Icon.astro';
+import SondaCard from './SondaCard.astro';
+import { getSondaView } from '../lib/sonda-build.js';
+import { SONDA_LINKS } from '../data/solya.js';
+
+const sonda = await getSondaView();
+const providerUrl = `https://sonda.network/datacenter?provider=${sonda.providerSlug}&cluster=mainnet-beta`;
+const placeUrl = `https://sonda.network/validators?cluster=mainnet-beta&country=${sonda.cc}`;
+
+const features = [
+  'Validators table with filters by client, version, country, city, provider, DoubleZero and Jito BAM, including exclude filters',
+  'Validator profiles with location, infrastructure, performance and links across clusters',
+  'Datacenters grouped by provider: cities, stake concentration, network infrastructure and performance',
+  'Chain vitals for every cluster: consensus, slot time, throughput and cluster status',
+  'Live checks of Jito, Harmonic and Solana endpoints',
+  'Where DoubleZero and Jito BAM infrastructure is placed, and which validators are connected to it',
+  'Cross-verified geolocation behind every record, with disagreements between sources flagged',
+];
+
+interface Tile {
+  group: string;
+  title: string;
+  desc: string;
+  href: string;
+  icon?: string;
+  img?: string | null;
+}
+
+const rows: { label: string; items: Tile[] }[] = [
+  {
+    label: 'Solya',
+    items: [
+      { group: 'solya', img: '/logo.jpg', icon: 'node', title: 'Solya on SONDA', desc: "Our validator's live profile", href: SONDA_LINKS.validator },
+      { group: 'solya', img: sonda.logoUrl, icon: 'server', title: sonda.provider || 'Our provider', desc: 'Our provider: validators, cities, network nodes', href: providerUrl },
+      { group: 'solya', img: sonda.cc ? `https://flagcdn.com/w80/${sonda.cc.toLowerCase()}.png` : null, icon: 'globe', title: sonda.place, desc: `Validators in ${sonda.place}`, href: placeUrl },
+    ],
+  },
+  {
+    label: 'Mainnet',
+    items: [
+      { group: 'sonda', icon: 'activity', title: 'Network overview', desc: 'Chain vitals, consensus, decentralization', href: 'https://sonda.network/?cluster=mainnet-beta' },
+      { group: 'sonda', icon: 'server', title: 'Datacenters', desc: 'Providers, cities, stake concentration', href: SONDA_LINKS.datacenters },
+      { group: 'sonda', icon: 'list', title: 'Validators', desc: 'Filters by client, provider, country', href: SONDA_LINKS.validators },
+    ],
+  },
+  {
+    label: 'Clusters',
+    items: [
+      { group: 'testnet', icon: 'flask', title: 'Testnet', desc: 'Where new releases are tested', href: 'https://sonda.network/?cluster=testnet' },
+      { group: 'devnet', icon: 'terminal', title: 'Devnet', desc: 'Rarely covered by other dashboards', href: 'https://sonda.network/?cluster=devnet' },
+      { group: 'alpenglow', icon: 'mountain', title: 'Alpenglow', desc: "Solana's new consensus, live", href: SONDA_LINKS.alpenglow },
+    ],
+  },
+  {
+    label: 'Updates & code',
+    items: [
+      { group: 'telegram', icon: 'telegram', title: 'Network events', desc: 'Live alerts in a Telegram channel', href: SONDA_LINKS.telegram },
+      { group: 'code', icon: 'github', title: 'Backend code', desc: 'Analyzer and data pipeline', href: SONDA_LINKS.repoBackend },
+      { group: 'code', icon: 'code', title: 'Dashboard code', desc: 'The sonda.network frontend', href: SONDA_LINKS.repoFrontend },
+    ],
+  },
+];
 ---
 
 <section class="section sonda-section" id="sonda">
   <div class="container">
     <div class="sonda-inner">
 
-      <!-- Left: content -->
+      <!-- Left: story and features -->
       <div class="sonda-content fade-in">
 
         <span class="section-label">Open-source project</span>
 
-        <!-- Title with SONDA acronym highlighted -->
         <h2 class="sonda-title">
-          <span class="sonda-acronym-line">
-            <span class="sonda-letter">S</span><span class="sonda-word">olana</span>
-          </span>
-          <span class="sonda-acronym-line">
-            <span class="sonda-letter">O</span><span class="sonda-word">bservatory for</span>
-          </span>
-          <span class="sonda-acronym-line">
-            <span class="sonda-letter">N</span><span class="sonda-word">etwork</span>
-          </span>
-          <span class="sonda-acronym-line">
-            <span class="sonda-letter">D</span><span class="sonda-word">ecentralization</span>
-          </span>
-          <span class="sonda-acronym-line">
-            <span class="sonda-letter">A</span><span class="sonda-word">nalysis</span>
-          </span>
+          <span class="sonda-acronym-line"><span class="sonda-letter">S</span><span class="sonda-word">olana</span></span>
+          <span class="sonda-acronym-line"><span class="sonda-letter">O</span><span class="sonda-word">bservatory for</span></span>
+          <span class="sonda-acronym-line"><span class="sonda-letter">N</span><span class="sonda-word">etwork</span></span>
+          <span class="sonda-acronym-line"><span class="sonda-letter">D</span><span class="sonda-word">ecentralization</span></span>
+          <span class="sonda-acronym-line"><span class="sonda-letter">A</span><span class="sonda-word">nalysis</span></span>
         </h2>
 
         <p class="sonda-desc">
-          Back in 2023, while choosing a datacenter for Solya, we ran into a
-          problem. Geolocation data was inconsistent across every tool we
-          checked: the same validator IP showing different countries depending
-          on the source. But it wasn't just about accuracy. We wanted to
-          understand which datacenters were already overloaded with stake,
-          and which regions were genuinely underserved. So we wrote a script
-          to find out. Then kept going.
+          SONDA started in 2023 with a question every operator runs into: where
+          should a validator live? The basics were out there: how many
+          validators a datacenter hosts, how much stake it holds, which provider
+          stands behind an ASN. What was missing was a way to compare
+          datacenters by how their validators actually perform, across vote
+          credits, skipped slots, block times and more, side by side. That meant
+          writing scripts and watching validators by hand. SONDA grew out of
+          those scripts.
         </p>
 
         <p class="sonda-desc">
-          SONDA grew into a wider monitoring and analytics tool for validator
-          operators. It runs every 60 seconds across all three Solana clusters
-          and surfaces the practical signals operators actually need: where
-          datacenters and ASNs are overloaded, which providers have a history
-          of outages, which endpoints are healthy right now, and how
-          DoubleZero and Jito BAM adoption is shifting across the network.
-          The public dashboard launched during the Colosseum Frontier
-          Hackathon in May 2026. Open source, free to use, built for the
-          whole ecosystem.
+          Today SONDA is an open-source observatory for Solana validators across
+          four clusters: mainnet-beta, testnet, the Alpenglow community cluster
+          and devnet, which most validator dashboards leave out. It shows where
+          validators run, with which providers and how well, where DoubleZero and
+          Jito BAM infrastructure is placed and who is connected to it, and turns
+          all of this into practical answers for operators. Mainnet data
+          refreshes every minute, and the dashboard is free to use.
         </p>
 
-        <!-- Feature list -->
+        <p class="sonda-desc">
+          I use SONDA myself to run Solya Validator. The move to Hong Kong in
+          September 2026 was decided with it: while building the datacenter
+          pages and filters, I compared cities and providers by stake
+          concentration, by how their validators perform and by the Jito BAM and
+          DoubleZero nodes nearby. You can do the same before choosing your next
+          datacenter.
+        </p>
+
         <ul class="sonda-features">
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>Tactical placement view: where datacenters and ASNs are overloaded, where regions are underserved</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>Provider history: who's been stable on the network, who has seen outages and churn</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>Live endpoint reachability across Jito, Harmonic, and Solana infrastructure</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>DoubleZero adoption with protocol-verified device geo</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>Jito BAM monitoring and IBRL performance per validator</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>Cross-verified geolocation as the data foundation, with discrepancies flagged</span>
-          </li>
-          <li class="sonda-feature">
-            <span class="sonda-feature-icon">⊕</span>
-            <span>All three clusters covered: mainnet-beta, testnet, devnet</span>
-          </li>
+          {features.map((f) => (
+            <li class="sonda-feature">
+              <span class="sonda-feature-icon" aria-hidden="true">⊕</span>
+              <span>{f}</span>
+            </li>
+          ))}
         </ul>
 
-        <!-- CTAs -->
         <div class="sonda-ctas">
-          <a
-            href="https://sonda.network"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary sonda-network-btn"
-          >
+          <a href={SONDA_LINKS.site} target="_blank" rel="noopener noreferrer" class="btn-primary sonda-network-btn">
             <span class="sonda-dot sonda-dot--live"></span>
             Open sonda.network
           </a>
-          <a
-            href="https://github.com/SolyaUk/sonda"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-secondary"
-          >
-            View on GitHub
+          <a href={SONDA_LINKS.x} target="_blank" rel="noopener noreferrer" class="btn-secondary sonda-x-btn">
+            <Icon name="x" size={14} />
+            Follow @SondaNetwork
           </a>
         </div>
 
       </div>
 
-      <!-- Right: dashboard preview -->
-      <div class="sonda-preview fade-in">
-        <div class="sonda-preview-card">
-
-          <!-- Header (window chrome) -->
-          <div class="sonda-preview-header">
-            <div class="sonda-preview-header-left">
-              <span class="sonda-preview-dot sonda-preview-dot--red"></span>
-              <span class="sonda-preview-dot sonda-preview-dot--yellow"></span>
-              <span class="sonda-preview-dot sonda-preview-dot--green"></span>
-            </div>
-            <span class="sonda-preview-title">sonda.network · mainnet-beta</span>
-            <span class="sonda-preview-live">
-              <span class="sonda-preview-live-dot"></span>
-              LIVE
-            </span>
-          </div>
-
-          <!-- Primary metrics row -->
-          <div class="sonda-summary-row">
-            <div class="sonda-summary-item">
-              <span class="sonda-summary-value">748</span>
-              <span class="sonda-summary-label">active validators</span>
-            </div>
-            <div class="sonda-summary-item">
-              <span class="sonda-summary-value">0.07<span class="sonda-summary-unit">%</span></span>
-              <span class="sonda-summary-label">stake-weighted skip</span>
-            </div>
-            <div class="sonda-summary-item">
-              <span class="sonda-summary-value">51.5<span class="sonda-summary-unit">%</span></span>
-              <span class="sonda-summary-label">stake on DZ multicast</span>
-            </div>
-            <div class="sonda-summary-item">
-              <span class="sonda-summary-value">19</span>
-              <span class="sonda-summary-label">superminority</span>
-            </div>
-          </div>
-
-          <!-- Infrastructure status -->
-          <div class="sonda-infra-block">
-            <div class="sonda-block-label">
-              <span>Live infrastructure status</span>
-            </div>
-            <div class="sonda-infra-grid">
-              <div class="sonda-infra-tile">
-                <div class="sonda-infra-tile-top">
-                  <span class="sonda-infra-tile-name">Jito BAM</span>
-                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
-                </div>
-                <div class="sonda-infra-tile-value">
-                  <span class="sonda-infra-tile-num">12</span>
-                  <span class="sonda-infra-tile-suffix">nodes</span>
-                </div>
-                <div class="sonda-infra-tile-meta">363 validators · 31.7% stake</div>
-              </div>
-
-              <div class="sonda-infra-tile">
-                <div class="sonda-infra-tile-top">
-                  <span class="sonda-infra-tile-name">Jito Endpoints</span>
-                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
-                </div>
-                <div class="sonda-infra-tile-value">
-                  <span class="sonda-infra-tile-num">58</span>
-                  <span class="sonda-infra-tile-suffix">/ 66</span>
-                </div>
-                <div class="sonda-infra-tile-meta">0 down · 8 unverified</div>
-              </div>
-
-              <div class="sonda-infra-tile">
-                <div class="sonda-infra-tile-top">
-                  <span class="sonda-infra-tile-name">Solana RPC</span>
-                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
-                </div>
-                <div class="sonda-infra-tile-value">
-                  <span class="sonda-infra-tile-num">6</span>
-                  <span class="sonda-infra-tile-suffix">/ 6</span>
-                </div>
-                <div class="sonda-infra-tile-meta">all operational</div>
-              </div>
-
-              <div class="sonda-infra-tile">
-                <div class="sonda-infra-tile-top">
-                  <span class="sonda-infra-tile-name">Harmonic</span>
-                  <span class="sonda-infra-tile-dot sonda-infra-tile-dot--green"></span>
-                </div>
-                <div class="sonda-infra-tile-value">
-                  <span class="sonda-infra-tile-num">18</span>
-                  <span class="sonda-infra-tile-suffix">/ 24</span>
-                </div>
-                <div class="sonda-infra-tile-meta">6 unverified</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Insights row -->
-          <div class="sonda-insights-block">
-            <div class="sonda-block-label">
-              <span>Insights</span>
-            </div>
-            <div class="sonda-insights-grid">
-              <div class="sonda-insight-tile sonda-insight-tile--magenta">
-                <span class="sonda-insight-cat">DoubleZero</span>
-                <span class="sonda-insight-num">444</span>
-                <span class="sonda-insight-desc">Validators broadcasting shreds via multicast</span>
-                <span class="sonda-insight-stake">51.5% of stake</span>
-              </div>
-              <div class="sonda-insight-tile sonda-insight-tile--cyan">
-                <span class="sonda-insight-cat">Jito BAM</span>
-                <span class="sonda-insight-num">363</span>
-                <span class="sonda-insight-desc">Validators connected to BAM block builder</span>
-                <span class="sonda-insight-stake">31.7% of stake</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Coverage matrix -->
-          <div class="sonda-coverage-block">
-            <div class="sonda-block-label">
-              <span>BAM × DoubleZero adoption</span>
-            </div>
-            <div class="sonda-coverage-grid">
-              <div class="sonda-coverage-cell sonda-coverage-cell--strong">
-                <span class="sonda-coverage-num">272</span>
-                <span class="sonda-coverage-cat">both</span>
-              </div>
-              <div class="sonda-coverage-cell">
-                <span class="sonda-coverage-num">91</span>
-                <span class="sonda-coverage-cat">BAM only</span>
-              </div>
-              <div class="sonda-coverage-cell">
-                <span class="sonda-coverage-num">185</span>
-                <span class="sonda-coverage-cat">DZ only</span>
-              </div>
-              <div class="sonda-coverage-cell sonda-coverage-cell--muted">
-                <span class="sonda-coverage-num">188</span>
-                <span class="sonda-coverage-cat">neither</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Footer note -->
-          <p class="sonda-preview-note">
-            Snapshot · epoch 976 · 2026-05-25. View live numbers, validators,
-            endpoints, and datacenters at
-            <a href="https://sonda.network" target="_blank" rel="noopener noreferrer">sonda.network</a>.
-          </p>
-
-        </div>
+      <!-- Right: Solya on SONDA -->
+      <div class="sonda-side fade-in">
+        <SondaCard />
       </div>
 
     </div>
+
+    <!-- Explore SONDA -->
+    <div class="sonda-explore fade-in">
+      <div class="sonda-explore-label">Explore SONDA</div>
+      <div class="explore-rows">
+        {rows.map((row) => (
+          <div class="explore-row">
+            <div class="explore-row-label">{row.label}</div>
+            <div class="explore-row-grid">
+              {row.items.map((item) => (
+                <a href={item.href} target="_blank" rel="noopener noreferrer" class={`explore-link g-${item.group}`}>
+                  <span class="explore-icon">
+                    <Icon name={item.icon || 'node'} size={20} />
+                    {item.img && <img src={item.img} alt="" width="40" height="40" loading="lazy" onerror="this.remove()" />}
+                  </span>
+                  <span class="explore-text">
+                    <span class="explore-title">{item.title}</span>
+                    <span class="explore-desc">{item.desc}</span>
+                  </span>
+                  <Icon name="arrowUpRight" size={14} class="explore-arrow" />
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
   </div>
 </section>

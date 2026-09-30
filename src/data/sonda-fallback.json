@@ -1,0 +1,57 @@
+{
+  "epoch": 1045,
+  "timestamp": "2026-09-29T18:13:49.966315+00:00",
+  "name": "Solya",
+  "identity": "HwN6eoEe9N3kwHi66hpQDBMFPk6ASQGthWKPX5MZmisp",
+  "vote": "HwcVgFSgmfeeF7zGFUBLoVA8Hpx8rtwyfCrJ1npBaSVC",
+  "bls": "6sSKE9WKgbLJSYgabWGE5RXEgctQWmV1PSJs5KvCR8Ci4dB4nVwNCTAnUuapYJaRah",
+  "version": "4.3.0",
+  "client": "JitoBAM",
+  "delinquent": false,
+  "stakeSol": 142382.540161374,
+  "stakeTier": 2,
+  "commission": 0,
+  "mevCommissionBps": 0,
+  "cc": "HK",
+  "country": "Hong Kong",
+  "city": "Tung Chung",
+  "place": "Hong Kong",
+  "placeLabel": "Hong Kong",
+  "region": "Asia-Pacific",
+  "confidence": "medium",
+  "discrepancy": "ipinfo=HK, geojs=SC",
+  "provider": "Amarutu",
+  "providerSlug": "amarutu",
+  "asn": "AS206264",
+  "logoUrl": "https://data.sonda.network/assets/dc/AS206264.png",
+  "countryStakePct": 0.652676738281524,
+  "providerValidators": 26,
+  "epochHours": 32,
+  "dz": {
+    "connected": true,
+    "device": "hkg001-dz001",
+    "metro": "hkg",
+    "location": "Hong Kong",
+    "multicast": true
+  },
+  "bam": {
+    "node": "hkg-mainnet-bam-2-tee",
+    "region": "hkg"
+  },
+  "perf": {
+    "skip": 0,
+    "votes": 0.9995,
+    "slot": 254.5,
+    "credits": 4462392,
+    "ibrl": 73.6791,
+    "tvc": {
+      "rank": 117,
+      "total": 683
+    }
+  },
+  "age": {
+    "epochs": 653,
+    "firstEpoch": 392,
+    "asOf": 1044
+  }
+}

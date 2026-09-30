@@ -1,7 +1,71 @@
 ---
 // src/components/NetworkContributions.astro
-const ALPENGLOW_IDENTITY = '2CY5tXmmEAQ5bwBdv4Yt74T4Gjfz92h1vbETrBdBWNj6';
-const ALPENGLOW_VOTE     = '2qdeoX3GL1Gpvf8g5XAF2TmSsbaCmzTv3TGmimnZcHQW';
+import Icon from './Icon.astro';
+import { ALPENGLOW, SONDA_LINKS, CONTACTS } from '../data/solya.js';
+
+interface Card {
+  icon: string;
+  tag: string;
+  tagTone?: 'alpenglow' | 'ua' | 'muted';
+  title: string;
+  body: string;
+  links?: { label: string; href: string }[];
+  featured?: boolean;
+  keys?: boolean;
+}
+
+const cards: Card[] = [
+  {
+    icon: 'mountain',
+    tag: 'Alpenglow community cluster',
+    tagTone: 'alpenglow',
+    title: 'Alpenglow genesis validator',
+    body: "Solya Validator joined the Alpenglow community cluster in its second wave (May 15, 2026, 86 validators) to help test the new consensus in real conditions before it reaches mainnet. Our node there is also SONDA's main data source for this cluster.",
+    featured: true,
+    keys: true,
+    links: [{ label: 'Our Alpenglow node on SONDA', href: `https://sonda.network/validator?id=${ALPENGLOW.vote}&cluster=alpenglow-community` }],
+  },
+  {
+    icon: 'wheel',
+    tag: 'Sep to Oct 2026',
+    tagTone: 'muted',
+    title: "Colosseum Crypto World's Fair",
+    body: "SONDA entered Crypto World's Fair (September 14 to October 12, 2026), the first multichain Colosseum hackathon. Shipped so far: datacenter pages by provider, include and exclude filters, and vote performance for every validator.",
+    links: [{ label: 'colosseum.com / sonda', href: 'https://colosseum.com/arena/projects/sonda-1' }],
+  },
+  {
+    icon: 'cap',
+    tag: 'Superteam Ukraine · 2026',
+    tagTone: 'ua',
+    title: 'Solana Startup Terminal 2.0',
+    body: 'SONDA joined the second Solana Startup Terminal by Superteam Ukraine: eight weeks of lessons, sessions with mentors and new people in the Ukrainian Solana community, on the way to the Colosseum hackathon.',
+    links: [{ label: 'Startup Terminal on Luma', href: 'https://luma.com/solana-startup-terminal-2' }],
+  },
+  {
+    icon: 'trophy',
+    tag: 'Submitted · May 2026',
+    tagTone: 'muted',
+    title: 'Colosseum Frontier 2026',
+    body: "SONDA was submitted to Solana's Frontier hackathon (April 6 to May 11, 2026). Shipped during it: the public dashboard at sonda.network, cross-verified geolocation, validator pages and event alerts on Telegram and X.",
+    links: [{ label: 'arena.colosseum.org / sonda', href: 'https://arena.colosseum.org/projects/explore/sonda' }],
+  },
+  {
+    icon: 'code',
+    tag: 'Public goods',
+    tagTone: 'muted',
+    title: 'Open-source tooling',
+    body: "SONDA's backend and dashboard, and this website, are open source on GitHub. Anyone can read the code, run their own copy or reuse parts of it in their own work.",
+    links: [{ label: 'github.com/SolyaUk', href: CONTACTS.github.url }],
+  },
+  {
+    icon: 'vote',
+    tag: 'Solana governance',
+    tagTone: 'muted',
+    title: 'Every governance vote',
+    body: 'Solya Validator takes part in every Solana governance vote: the SIMD votes, including SIMD-0326 for Alpenglow, and the SGP votes, including SGP-0001, the Solana Constitution.',
+    links: [{ label: 'governance.solana.com', href: 'https://governance.solana.com/proposals' }],
+  },
+];
 ---
 
 <section class="section ecosystem-section" id="ecosystem">
@@ -11,120 +75,44 @@ const ALPENGLOW_VOTE     = '2qdeoX3GL1Gpvf8g5XAF2TmSsbaCmzTv3TGmimnZcHQW';
       <span class="section-label">Beyond running a node</span>
       <h2 class="section-title">Active in the ecosystem</h2>
       <p class="section-desc">
-        Things Solya does for Solana beyond keeping the mainnet validator
-        online: volunteering for early protocol testing, building open-source
-        tooling, and shipping public goods together with the community.
+        What Solya Validator does for Solana besides staying online on mainnet:
+        early protocol testing, open-source tools, hackathons, learning with the
+        community and governance votes.
       </p>
     </div>
 
     <div class="ecosystem-grid">
-
-      <!-- Alpenglow Genesis -->
-      <article class="ecosystem-card ecosystem-card--featured fade-in">
-        <div class="ecosystem-card-top">
-          <div class="ecosystem-card-icon" aria-hidden="true">🏔</div>
-          <span class="ecosystem-tag ecosystem-tag--cyan">Alpenglow community cluster</span>
-        </div>
-        <h3 class="ecosystem-card-title">Alpenglow Genesis Validator</h3>
-        <p class="ecosystem-card-body">
-          Solya joined the Alpenglow community test cluster in the second
-          wave (May 15, 2026, 86 validators). The initiative was proposed
-          by the Solana Foundation on a community call. Solya was glad to
-          step in. The point is simple: volunteer help so the upcoming
-          consensus change is tested in real conditions, and the eventual
-          mainnet switch happens smoothly.
-        </p>
-
-        <div class="ecosystem-keys">
-          <div class="ecosystem-key-row">
-            <span class="ecosystem-key-label">Identity</span>
-            <code class="ecosystem-key-value">{ALPENGLOW_IDENTITY}</code>
+      {cards.map((c) => (
+        <article class={`ecosystem-card fade-in${c.featured ? ' ecosystem-card--featured' : ''}`}>
+          <div class="ecosystem-card-top">
+            <div class="card-icon"><Icon name={c.icon} size={22} /></div>
+            <span class={`ecosystem-tag${c.tagTone && c.tagTone !== 'muted' ? ` ecosystem-tag--${c.tagTone}` : ''}`}>
+              {c.tagTone === 'ua' && <i class="ua-flag" aria-hidden="true"></i>}
+              {c.tag}
+            </span>
           </div>
-          <div class="ecosystem-key-row">
-            <span class="ecosystem-key-label">Vote</span>
-            <code class="ecosystem-key-value">{ALPENGLOW_VOTE}</code>
-          </div>
-        </div>
+          <h3 class="ecosystem-card-title">{c.title}</h3>
+          <p class="ecosystem-card-body">{c.body}</p>
 
-        <p class="ecosystem-card-note">
-          Alpenglow cluster only · not for delegation
-        </p>
-      </article>
+          {c.keys && (
+            <>
+              <p class="ecosystem-card-note">Alpenglow cluster only · not for delegation · keys on the <a href="/security/">Security page</a></p>
+            </>
+          )}
 
-      <!-- Colosseum Frontier -->
-      <article class="ecosystem-card fade-in">
-        <div class="ecosystem-card-top">
-          <div class="ecosystem-card-icon" aria-hidden="true">🏟</div>
-          <span class="ecosystem-tag ecosystem-tag--magenta">Submitted · May 2026</span>
-        </div>
-        <h3 class="ecosystem-card-title">Colosseum Frontier 2026</h3>
-        <p class="ecosystem-card-body">
-          Submitted SONDA to the Colosseum Frontier Hackathon
-          (April 6 to May 11). Shipped during the hackathon: a live public
-          dashboard at sonda.network covering all three Solana clusters,
-          cross-verified geolocation, infrastructure monitoring, per-validator
-          pages, and event alerts via Telegram and Twitter. Coming next:
-          per-datacenter dashboards, historical timelines, and tactical
-          alerts for operators.
-        </p>
-
-        <div class="ecosystem-card-links">
-          <a
-            href="https://arena.colosseum.org/projects/explore/sonda"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ecosystem-card-link"
-          >
-            <span>arena.colosseum.org / sonda</span>
-            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M7 17L17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-          <a
-            href="https://sonda.network"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ecosystem-card-link"
-          >
-            <span>sonda.network</span>
-            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M7 17L17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Open-source tooling -->
-      <article class="ecosystem-card fade-in">
-        <div class="ecosystem-card-top">
-          <div class="ecosystem-card-icon" aria-hidden="true">🛠</div>
-          <span class="ecosystem-tag">Public goods</span>
-        </div>
-        <h3 class="ecosystem-card-title">Open-source tooling</h3>
-        <p class="ecosystem-card-body">
-          SONDA, the validator website, and other operator tools are open
-          source. All the code lives on GitHub. Anyone can browse it, run
-          their own instance, or use parts of it in their own work.
-        </p>
-
-        <div class="ecosystem-card-links">
-          <a
-            href="https://github.com/SolyaUk"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ecosystem-card-link"
-          >
-            <span>github.com/SolyaUk</span>
-            <svg class="ecosystem-card-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M7 17L17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-        </div>
-      </article>
-
+          {c.links && (
+            <div class="ecosystem-card-links">
+              {c.links.map((l) => (
+                <a href={l.href} target="_blank" rel="noopener noreferrer" class="ecosystem-card-link">
+                  <span>{l.label}</span>
+                  <Icon name="arrowUpRight" size={14} class="ecosystem-card-link-icon" />
+                </a>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
     </div>
+
   </div>
 </section>
